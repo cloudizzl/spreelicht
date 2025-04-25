@@ -6,4 +6,4 @@ Claudia Nguyen - 591659
 Max Janke - 592427
 
 ## App description
-TODO
+This web app tracks environmentally unfriendly locations and missing sustainable infrastructure in Berlin. Admins can add/edit entries, while users view data.
