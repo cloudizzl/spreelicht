@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpreeLicht</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <script src="../js/script.js" defer></script>
+    <link rel="stylesheet" href="/src/css/styles.css">
+    <script src="/src/js/script.js" defer></script>
 </head>
 <body>
     <!-- LOGIN SCREEN -->
@@ -47,11 +47,41 @@
             <select name="locations" id="locations">
                 <option value="" selected disabled hidden>Choose here</option>
                 <optgroup label="Treptow-Köpenick">
-                    <option value="Marzahn">Johannisthal</option>
+                    <option value="Johannisthal">Johannisthal</option>
                     <option value="Adlershof">Adlershof</option>
-                    <option value="Johannisthal">Oberschöneweide</option>
+                    <option value="Oberschöneweide">Oberschöneweide</option>
                 </optgroup>
             </select>
+        </div>
+
+         <!-- Standorte -->
+        <div class="locations-list">
+            <div class="location-card">
+                <h3>Titel</h3>
+                <p>Straße + Hausnummer</p>
+                <p>PLZ</p>
+                <p>Kategorie</p>
+                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
+            </div>
+        </div>
+
+        <div class="locations-list">
+            <div class="location-card">
+                <h3>Titel</h3>
+                <p>Straße + Hausnummer</p>
+                <p>PLZ</p>
+                <p>Kategorie</p>
+            </div>
+        </div>
+
+        <div class="locations-list">
+            <div class="location-card">
+                <h3>Titel</h3>
+                <p>Straße + Hausnummer</p>
+                <p>PLZ</p>
+                <p>Kategorie</p>
+                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
+            </div>
         </div>
 
         <div class="button-group">
@@ -98,15 +128,24 @@
             <label for="city">City:</label>
             <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
 
+            <label for="city">Latitude:</label>
+            <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
+
+            <label for="city">Longitude:</label>
+            <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+
             <div class="dropdown-group">
                 <label for="categories">Select a category:</label>
                 <select name="categories" id="categories"">
                     <option value="" selected disabled hidden>Choose here</option>
-                    <option value="Marzahn">Radweg</option>
-                    <option value="Adlershof">Parkplätze</option>
-                    <option value="Johannisthal">ÖPNV</option>
-                    <option value="Johannisthal">Verschmutzungen</option>
-                    <option value="Johannisthal">Baustellen</option>
+                    <option value="Radweg">Radweg</option>
+                    <option value="Fußweg">Fußweg</option>
+                    <option value="ÖPNV">ÖPNV</option>
+                    <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
+                    <option value="Verschmutzungen von öffentlichen Plätzen und Straßen">Verschmutzungen von öffentlichen Plätzen und Straßen</option>
+                    <option value="Luftverschmutzung">Luftverschmutzung</option>
+                    <option value="Baustellen">Baustellen</option>
+                    <option value="Transportmittel-Sharing">Transportmittel-Sharing</option>
                 </select>
             </div>
 
@@ -142,6 +181,24 @@
 
             <label for="city">City:</label>
             <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
+
+            <label for="city">Latitude:</label>
+            <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
+
+            <label for="city">Longitude:</label>
+            <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+
+            <div class="dropdown-group">
+                <label for="categories">Select a category:</label>
+                <select name="categories" id="categories"">
+                    <option value=""disabled hidden>Choose here</option>
+                    <option value="Radweg" selected disabled hidden>Radweg</option>
+                    <option value="Parkplätze">Parkplätze</option>
+                    <option value="ÖPNV">ÖPNV</option>
+                    <option value="Verschmutzungen">Verschmutzungen</option>
+                    <option value="Baustellen">Baustellen</option>
+                </select>
+            </div>
 
             <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
 

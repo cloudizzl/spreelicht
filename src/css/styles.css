@@ -1,11 +1,70 @@
-body{
+body {
     background-color: aliceblue;
+
+    /* https://www.cursors-4u.com */
+    cursor: url(https://cur.cursors-4u.net/symbols/sym-7/sym635.ani), 
+            url(https://cur.cursors-4u.net/symbols/sym-7/sym635.png), 
+            auto !important;
 }
-div.login-container{
+
+div.login-container {
     display: flex;
     background-color: lightblue;
     border: 1px solid black;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
+}
+
+h1 {
+    font-family: arial, verdana, sans-serif; 
+}
+
+h2 {
+    font-family: 'Courier New',  monospace; 
+}
+
+h3 {
+    font-family: 'Courier New',  monospace; 
+}
+
+h4 { 
+    font-family: "Times New Roman", serif; 
+}
+
+.locations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px;
+}
+
+.location-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-group {
+    margin: 20px;
+}
+
+.dropdown-group select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+}
+
+input[type=submit]:hover {
+    background-color: #7ca085;
+    color: white;
+}
+
+input[type=button] {
+    background-color: #c585e8;
+    color: white;
 }
