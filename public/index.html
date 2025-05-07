@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,205 +8,218 @@
     <link rel="stylesheet" href="/src/css/styles.css">
     <script src="/src/js/script.js" defer></script>
 </head>
+
 <body>
+    
     <!-- LOGIN SCREEN -->
-    <div class="login-container">
-        <form action="/login" method="POST">
-            <h1>SpreeLicht</h1>
+    <div class="screen">
+        <div class="login-container">
+            <form action="/login" method="POST">
+                <h1>SpreeLicht</h1>
 
 
-            <!-- <label for="uname"><b>Username:</b></label>
+                <!-- <label for="uname"><b>Username:</b></label>
             <input type="text" id="uname" placeholder="Enter Username" name="uname" required> -->
 
-            <label for="username"<b>Username:</b></label>
-            <input type="text" id="username" name="username" required>
+                <label for="username" <b>Username:</b></label>
+                <input type="text" id="username" name="username" required>
 
-            <!-- <label for="psw"><b>Password:</b></label>
+                <!-- <label for="psw"><b>Password:</b></label>
             <input type="password" id="psw" placeholder="Enter Password" name="psw" required> -->
 
-            <label for="password"<b>Password:</b></label>
-            <input type="password" id="password" name="password" required>
+                <label for="password" <b>Password:</b></label>
+                <input type="password" id="password" name="password" required>
 
-            <!-- <input id="formSubmitId" type="submit" value="Login"> -->
+                <!-- <input id="formSubmitId" type="submit" value="Login"> -->
 
-            <button type="submit">Login</button>
+                <button type="submit">Login</button>
 
-            <!-- optional -->
-            <input type="checkbox" id="remember" checked name="remember">
-            <label for="remember">Remember me</label>
-        </form>
+                <!-- optional -->
+                <input type="checkbox" id="remember" checked name="remember">
+                <label for="remember">Remember me</label>
+            </form>
+        </div>
     </div>
+
 
     <!-- MAIN SCREEN -->
-    <div class="main-container">
-        <header>
-            <h1>Welcome to SpreeLicht username</h1>
-        </header>
-
-        <div class="dropdown-group">
-            <label for="locations">Select a location:</label>
-            <select name="locations" id="locations">
-                <option value="" selected disabled hidden>Choose here</option>
-                <optgroup label="Treptow-Köpenick">
-                    <option value="Johannisthal">Johannisthal</option>
-                    <option value="Adlershof">Adlershof</option>
-                    <option value="Oberschöneweide">Oberschöneweide</option>
-                </optgroup>
-            </select>
-        </div>
-
-         <!-- Standorte -->
-        <div class="locations-list">
-            <div class="location-card">
-                <h3>Titel</h3>
-                <p>Straße + Hausnummer</p>
-                <p>PLZ</p>
-                <p>Kategorie</p>
-                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
-            </div>
-        </div>
-
-        <div class="locations-list">
-            <div class="location-card">
-                <h3>Titel</h3>
-                <p>Straße + Hausnummer</p>
-                <p>PLZ</p>
-                <p>Kategorie</p>
-            </div>
-        </div>
-
-        <div class="locations-list">
-            <div class="location-card">
-                <h3>Titel</h3>
-                <p>Straße + Hausnummer</p>
-                <p>PLZ</p>
-                <p>Kategorie</p>
-                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
-            </div>
-        </div>
-
-        <div class="button-group">
-            <button type="button" id="addButton">
-                <span class="button-icon">+</span> Add
-            </button>
-            <button type="button" id="logoutButton">
-                <span class="button-icon">←</span> Logout
-            </button>
-        </div>
-
-        <!-- <button type="button" id="addButton"><b>ADD</b></button> <br><br>
-        <button type="button" id="logoutButton"><i>Logout</i></button> <br><br> -->
-
-        <!-- TODO warum 2023?, idk was für Verweise, nach unten -->
-        <footer>
-            <p>© 2025 SpreeLicht. All rights reserved.</p>
-            <nav>
-                <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
-                <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
-            </nav>
-        </footer>
-    </div>
-
-    <!-- ADD-SCREEN -->
-    <div class="add-container">
-        <form action="/add" method="POST">
-            <label for="locationName">Location:</label>
-            <input type="text" id="locationName" name="locationName" required><br><br>
-            
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required> <br><br>
-
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description"> <br><br>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required> <br><br>
-
-            <!-- TODO -->
-            <label for="zip">Zip code:</label>
-            <input type="number" id="zip" name="zip" required> <br><br>
-
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
-
-            <label for="city">Latitude:</label>
-            <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
-
-            <label for="city">Longitude:</label>
-            <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+    <div class="screen">
+        <div class="main-container">
+            <header>
+                <h1>Welcome to SpreeLicht username</h1>
+            </header>
 
             <div class="dropdown-group">
-                <label for="categories">Select a category:</label>
-                <select name="categories" id="categories"">
+                <label for="locations">Select a location:</label>
+                <select name="locations" id="locations">
                     <option value="" selected disabled hidden>Choose here</option>
-                    <option value="Radweg">Radweg</option>
-                    <option value="Fußweg">Fußweg</option>
-                    <option value="ÖPNV">ÖPNV</option>
-                    <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
-                    <option value="Verschmutzungen von öffentlichen Plätzen und Straßen">Verschmutzungen von öffentlichen Plätzen und Straßen</option>
-                    <option value="Luftverschmutzung">Luftverschmutzung</option>
-                    <option value="Baustellen">Baustellen</option>
-                    <option value="Transportmittel-Sharing">Transportmittel-Sharing</option>
+                    <optgroup label="Treptow-Köpenick">
+                        <option value="Johannisthal">Johannisthal</option>
+                        <option value="Adlershof">Adlershof</option>
+                        <option value="Oberschöneweide">Oberschöneweide</option>
+                    </optgroup>
                 </select>
             </div>
 
-             <!-- TODO Funktionalität für Bilder-Hochladen -->
 
-            <input type="submit" id="formSubmitLocation" value="Add"><br><br>
-            
-            <input type="button" id="formCancelLocation" value="Cancel">
-        </form>
-        
-    
 
+            <!-- Standorte -->
+            <div class="locations-list">
+                <div class="location-card">
+                    <h3>Titel</h3>
+                    <p>Straße + Hausnummer</p>
+                    <p>PLZ</p>
+                    <p>Kategorie</p>
+                    <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
+                    <br><br>
+                </div>
+
+                <div class="location-card">
+                    <h3>Titel</h3>
+                    <p>Straße + Hausnummer</p>
+                    <p>PLZ</p>
+                    <p>Kategorie</p>
+                </div>
+
+                <div class="location-card">
+                    <h3>Titel</h3>
+                    <p>Straße + Hausnummer</p>
+                    <p>PLZ</p>
+                    <p>Kategorie</p>
+                    <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
+                    <br><br>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="addButton">
+                    <span class="button-icon">+</span> Add
+                </button>
+                <button type="button" id="logoutButton">
+                    <span class="button-icon">←</span> Logout
+                </button>
+            </div>
+
+            <!-- <button type="button" id="addButton"><b>ADD</b></button> <br><br>
+        <button type="button" id="logoutButton"><i>Logout</i></button> <br><br> -->
+
+            <!-- TODO warum 2023?, idk was für Verweise, nach unten -->
+            <footer>
+                <p>© 2025 SpreeLicht. All rights reserved.</p>
+                <nav>
+                    <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
+                    <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
+                </nav>
+            </footer>
+        </div>
     </div>
+
+
+    <!-- ADD-SCREEN -->
+    <div class="screen">
+        <div class="add-container">
+            <form action="/add" method="POST">
+                <label for="locationName">Location:</label>
+                <input type="text" id="locationName" name="locationName" required><br><br>
+
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required> <br><br>
+
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description"> <br><br>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required> <br><br>
+
+                <!-- TODO -->
+                <label for="zip">Zip code:</label>
+                <input type="number" id="zip" name="zip" required> <br><br>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
+
+                <label for="city">Latitude:</label>
+                <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
+
+                <label for="city">Longitude:</label>
+                <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+
+                <div class="dropdown-group">
+                    <label for="categories">Select a category:</label>
+                    <select name="categories" id="categories"">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    <option value=" Radweg">Radweg</option>
+                        <option value="Fußweg">Fußweg</option>
+                        <option value="ÖPNV">ÖPNV</option>
+                        <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
+                        <option value="Verschmutzungen von öffentlichen Plätzen und Straßen">Verschmutzungen von
+                            öffentlichen Plätzen und Straßen</option>
+                        <option value="Luftverschmutzung">Luftverschmutzung</option>
+                        <option value="Baustellen">Baustellen</option>
+                        <option value="Transportmittel-Sharing">Transportmittel-Sharing</option>
+                    </select>
+                </div>
+
+                <!-- TODO Funktionalität für Bilder-Hochladen -->
+
+                <input type="submit" id="formSubmitLocation" value="Add"><br><br>
+
+                <input type="button" id="formCancelLocation" value="Cancel">
+            </form>
+        </div>
+    </div>
+
 
 
     <!-- UPDATE/DELETE-SCREEN -->
-    <div class="update-container">
-        <form action="/update" method="POST">
-            <label for="locationName">Location:</label>
-            <input type="text" id="locationName" name="locationName" readonly value="HTW-Berlin Campus-Wilhelminenhof"><br><br>
-            
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" readonly value="Campus-Wilhelminenhof-Berlin"> <br><br>
+    <div class="screen">
+        <div class="update-container">
+            <form action="/update" method="POST">
+                <label for="locationName">Location:</label>
+                <input type="text" id="locationName" name="locationName" readonly
+                    value="HTW-Berlin Campus-Wilhelminenhof"><br><br>
 
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" readonly value="HTW-Berlin"> <br><br>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" readonly value="Campus-Wilhelminenhof-Berlin"> <br><br>
 
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" readonly value="Wilhelminenhofstraße 75A"> <br><br>
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" readonly value="HTW-Berlin"> <br><br>
 
-            <label for="zip">Zip code:</label>
-            <input type="number" id="zip" name="zip" readonly value="12459"> <br><br>
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" readonly value="Wilhelminenhofstraße 75A"> <br><br>
 
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
+                <label for="zip">Zip code:</label>
+                <input type="number" id="zip" name="zip" readonly value="12459"> <br><br>
 
-            <label for="city">Latitude:</label>
-            <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
 
-            <label for="city">Longitude:</label>
-            <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+                <label for="city">Latitude:</label>
+                <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
 
-            <div class="dropdown-group">
-                <label for="categories">Select a category:</label>
-                <select name="categories" id="categories"">
-                    <option value=""disabled hidden>Choose here</option>
-                    <option value="Radweg" selected disabled hidden>Radweg</option>
-                    <option value="Parkplätze">Parkplätze</option>
-                    <option value="ÖPNV">ÖPNV</option>
-                    <option value="Verschmutzungen">Verschmutzungen</option>
-                    <option value="Baustellen">Baustellen</option>
-                </select>
-            </div>
+                <label for="city">Longitude:</label>
+                <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
 
-            <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin"> <br><br>
+                <div class="dropdown-group">
+                    <label for="categories">Select a category:</label>
+                    <select name="categories" id="categories"">
+                        <option value=""disabled hidden>Choose here</option>
+                        <option value=" Radweg" selected disabled hidden>Radweg</option>
+                        <option value="Parkplätze">Parkplätze</option>
+                        <option value="ÖPNV">ÖPNV</option>
+                        <option value="Verschmutzungen">Verschmutzungen</option>
+                        <option value="Baustellen">Baustellen</option>
+                    </select>
+                </div>
 
-            <input type="button" id="formUpdateLocation" value="Update">
-            <input type="button" id="formDeleteLocation" value="Delete">
-            <input type="button" id="formCancelLocation" value="Cancel">
-        </form>
+                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
+                <br><br>
+
+                <input type="button" id="formUpdateLocation" value="Update">
+                <input type="button" id="formDeleteLocation" value="Delete">
+                <input type="button" id="formCancelLocation" value="Cancel">
+            </form>
+        </div>
     </div>
 </body>
 
