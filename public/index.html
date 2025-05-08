@@ -5,23 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpreeLicht</title>
+    <meta name="description"
+        content="SpreeLicht hilft Berliner:innen, Probleme im Stadtverkehr zu melden und zu verfolgen">
     <link rel="stylesheet" href="/src/css/styles.css">
-    <script src="/src/js/script.js" defer></script>
+    <!-- <script src="/src/js/script.js" defer></script> -->
 </head>
 
 <body>
-    
+
     <!-- LOGIN SCREEN -->
-    <div class="screen">
+    <section id="login-screen" class="screen" aria-labelledby="login-title">
         <div class="login-container">
-            <form action="/login" method="POST">
-                <h1>SpreeLicht</h1>
+            <form action="/login" method="POST" aria-describedby="login-instructions">
+                <h1 id="login-title">SpreeLicht</h1>
 
                 <label for="username" <b>Username:</b></label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" required aria-required="true" autocomplete="username">
 
                 <label for="password" <b>Password:</b></label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required aria-required="true"
+                    autocomplete="current-password">
+
 
                 <button type="submit">Login</button>
 
@@ -30,19 +34,19 @@
                 <label for="remember">Remember me</label>
             </form>
         </div>
-    </div>
+    </section>
 
 
     <!-- MAIN SCREEN -->
-    <div class="screen">
+    <section id="main-screen" class="screen" aria-labelledby="welcome-heading">
         <div class="main-container">
             <header>
-                <h1>Welcome to SpreeLicht username</h1>
+                <h1 id="welcome-heading">Welcome to SpreeLicht, <span id="username-display">username</span></h1>
             </header>
 
             <div class="dropdown-group">
                 <label for="locations">Select a location:</label>
-                <select name="locations" id="locations">
+                <select name="locations" id="locations" aria-labelledby="location-label">
                     <option value="" selected disabled hidden>Choose here</option>
                     <optgroup label="Treptow-Köpenick">
                         <option value="Johannisthal">Johannisthal</option>
@@ -53,84 +57,119 @@
             </div>
 
 
+            <section aria-labelledby="locations-heading">
+                <h2 id="locations-heading">Current reports</h2>
+                <!-- Standorte -->
+                <div class="locations-list" role="list">
+                    <article class="location-card" role="listitem">
+                        <h3>S-Bahn Verspätung</h3>
+                        <address>
+                            <p>Koppenstraße 3</p>
+                            <p>10243 Berlin</p>
+                        </address>
+                        <p>Kategorie: <span class="category">ÖPNV</span></p>
+                        <figure>
+                            <img src="../ressources/images/Verspätung.jpeg"
+                                alt="S-Bahn Verspätung: Anzeigetafel mit Verspätungsinformation" loading="lazy">
+                        </figure>
+                    </article>
 
-            <!-- Standorte -->
-            <div class="locations-list">
-                <div class="location-card">
-                    <h3>S-Bahn Verspätung</h3>
-                    <p>Koppenstraße 3</p>
-                    <p>10243 Berlin</p>
-                    <p>ÖPNV</p>
-                    <img src="../ressources/images/Verspätung.jpeg" alt="S-Bahn Verspätung">
-                    <br><br>
+                    <article class="location-card" role="listitem">
+                        <h3>S-Bahnverkehr in S Schöneweide unterbrochen </h3>
+                        <address>
+                            <p>Michael-Brückner-Straße 42</p>
+                            <p>12439 Berlin</p>
+                        </address>
+                        <p>Kategorie: <span class="category">ÖPNV</span></p>
+
+                    </article>
+
+                    <article class="location-card" role="listitem">
+                        <address>
+                            <h3>Leihfahrzeuge blockieren Straßen</h3>
+                            <p>Manteuffelstraße 77</p>
+                            <p>10999 Berlin</p>
+                        </address>
+                        <p>Kategorie: <span class="category">Transportmittel-Sharing</span></p>
+                        <figure>
+                            <img src="../ressources/images/Manteuffelstraße.JPG"
+                                alt="Mehrere E-Scooter und Leihfahrräder blockieren den Gehweg" loading="lazy">
+                        </figure>
+                    </article>
                 </div>
 
-                <div class="location-card">
-                    <h3>S-Bahnverkehr in S Schöneweide unterbrochen </h3>
-                    <p>Michael-Brückner-Straße 42</p>
-                    <p>12439 Berlin</p>
-                    <p>ÖPNV</p>
+
+                <div class="button-group" role="toolbar" aria-label="main-actions">
+                    <button type="button" id="addButton" class="action-button" aria-label="add new report">
+                        <span class="button-icon">+</span> Add
+                    </button>
+                    <button type="button" id="logoutButton" class="action-button" aria-label="logout">
+                        <span class="button-icon">←</span> Logout
+                    </button>
                 </div>
 
-                <div class="location-card">
-                    <h3>Leihfahrzeuge blockieren Straßen</h3>
-                    <p>Manteuffelstraße 77</p>
-                    <p>10999 Berlin</p>
-                    <p>Transportmittel-Sharing</p>
-                    <img src="../ressources/images/Manteuffelstraße.JPG" alt="Leihfahrzeuge blockieren Straßen">
-                    <br><br>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button type="button" id="addButton">
-                    <span class="button-icon">+</span> Add
-                </button>
-                <button type="button" id="logoutButton">
-                    <span class="button-icon">←</span> Logout
-                </button>
-            </div>
-
-            <footer>
-                <p>© 2025 SpreeLicht. All rights reserved.</p>
-                <nav>
-                    <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
-                    <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
-                </nav>
-            </footer>
+                <footer>
+                    <p>© 2025 SpreeLicht. All rights reserved.</p>
+                    <nav aria-label="copyright">
+                        <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
+                        <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
+                    </nav>
+                </footer>
         </div>
-    </div>
+    </section>
 
+
+    <hr>
 
     <!-- ADD-SCREEN -->
-    <div class="screen">
+    <section id="add-screen" class="screen" aria-labelledby="add-title">
         <div class="add-container">
-            <form action="/add" method="POST">
-                <label for="locationName">Location:</label>
-                <input type="text" id="locationName" name="locationName" required><br><br>
+            <form action="/add" method="POST" aria-describedby="add-instructions">
+                <h3>Add a new location!</h3>
 
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required> <br><br>
+                <div class="form-element">
+                    <label for="locationName">Location:</label>
+                    <input type="text" id="locationName" name="locationName" required aria-required="true">
+                </div>
 
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description"> <br><br>
+                <div class="form-element">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required aria-required="true">
+                </div>
 
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" required> <br><br>
+                <div class="form-element">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="3" aria-label="description"></textarea>
+                </div>
 
-                <!-- TODO -->
-                <label for="zip">Zip code:</label>
-                <input type="number" id="zip" name="zip" required> <br><br>
+                <div class="form-element">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required aria-required="true">
+                </div>
 
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" readonly value="Berlin"> <br><br>
+                <div class="form-element">
+                    <label for="zip">Zip code:</label>
+                    <input type="number" id="zip" name="zip" required aria-required="true" min="10000" max="14999"
+                        pattern="[0-9]{5}" inputmode="numeric">
+                </div>
 
-                <label for="city">Latitude:</label>
-                <input type="text" id="lat" name="lat" readonly value="52.45698925382436"> <br><br>
+                <div class="form-element">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" readonly value="Berlin">
+                </div>
 
-                <label for="city">Longitude:</label>
-                <input type="text" id="lon" name="lon" readonly value="13.526651668375687"> <br><br>
+                <div class="form-element">
+                    <label for="city">Latitude:</label>
+                    <input type="text" id="lat" name="lat" readonly value="52.45698925382436">
+                </div>
 
+                <div class="form-element">
+                    <label for="city">Longitude:</label>
+                    <input type="text" id="lon" name="lon" readonly value="13.526651668375687">
+                </div>
+
+
+                <!-- TODO required? -->
                 <div class="dropdown-group">
                     <label for="categories">Select a category:</label>
                     <select name="categories" id="categories"">
@@ -139,72 +178,96 @@
                         <option value="Fußweg">Fußweg</option>
                         <option value="ÖPNV">ÖPNV</option>
                         <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
-                        <option value="Verschmutzungen von öffentlichen Plätzen und Straßen">Verschmutzungen von
+                        <option value="Verschmutzungen">Verschmutzungen von
                             öffentlichen Plätzen und Straßen</option>
                         <option value="Luftverschmutzung">Luftverschmutzung</option>
                         <option value="Baustellen">Baustellen</option>
                         <option value="Transportmittel-Sharing">Transportmittel-Sharing</option>
                     </select>
                 </div>
-                
-                <input type="submit" id="formSubmitLocation" value="Add"><br><br>
 
+                <div class="form-group file-upload">
+                    <label for="image-upload">Uplaod picture (optional):</label>
+                    <input type="file" id="image-upload" name="image" accept="image/*">
+                </div>
+
+                <input type="submit" id="formSubmitLocation" value="Add">
                 <input type="button" id="formCancelLocation" value="Cancel">
             </form>
         </div>
-    </div>
-
+    </section>
 
 
     <!-- UPDATE/DELETE-SCREEN -->
-    <div class="screen">
+    <section id="update-screen" class="screen" aria-labelledby="update-title">
         <div class="update-container">
-            <form action="/update" method="POST">
+            <form action="/update" method="POST aria-describedby=" update-instructions">
+                <h3>Update a location!</h3>
                 <label for="locationName">Location:</label>
-                <input type="text" id="locationName" name="locationName" placeholder value="HTW-Berlin Campus-Wilhelminenhof"><br><br>
+                <input type="text" id="locationName" name="locationName" placeholder
+                    value="HTW-Berlin Campus-Wilhelminenhof"><br><br>
 
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" placeholder value="Campus-Wilhelminenhof-Berlin"> <br><br>
-
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" placeholder value="HTW-Berlin"> <br><br>
-
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" placeholder value="Wilhelminenhofstraße 75A"> <br><br>
-
-                <label for="zip">Zip code:</label>
-                <input type="number" id="zip" name="zip" placeholder value="12459"> <br><br>
-
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" placeholder value="Berlin"> <br><br>
-
-                <label for="city">Latitude:</label>
-                <input type="text" id="lat" name="lat" placeholder value="52.45698925382436"> <br><br>
-
-                <label for="city">Longitude:</label>
-                <input type="text" id="lon" name="lon" placeholder value="13.526651668375687"> <br><br>
-
-                <div class="dropdown-group">
-                    <label for="categories">Select a category:</label>
-                    <select name="categories" id="categories"">
-                        <option value=""disabled hidden>Choose here</option>
-                        <option value=" Radweg" selected disabled hidden>Radweg</option>
-                        <option value="Parkplätze">Parkplätze</option>
-                        <option value="ÖPNV">ÖPNV</option>
-                        <option value="Verschmutzungen">Verschmutzungen</option>
-                        <option value="Baustellen">Baustellen</option>
-                    </select>
+                <div class="form-element">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" placeholder value="Campus-Wilhelminenhof-Berlin">
                 </div>
 
-                <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
-                <br><br>
+                <div class="form-element">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" placeholder value="HTW-Berlin">
+                </div>
 
-                <input type="button" id="formUpdateLocation" value="Update">
-                <input type="button" id="formDeleteLocation" value="Delete">
-                <input type="button" id="formCancelLocation" value="Cancel">
+                <div class="form-element">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" placeholder value="Wilhelminenhofstraße 75A">
+                </div>
+
+                <div class="form-element">
+                    <label for="zip">Zip code:</label>
+                    <input type="number" id="zip" name="zip" placeholder value="12459">
+                </div>
+
+                <div class="form-element">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" placeholder value="Berlin">
+                </div>
+
+                <div class="form-element">
+                    <label for="city">Latitude:</label>
+                    <input type="text" id="lat" name="lat" placeholder value="52.45698925382436">
+                </div>
+
+                <div class="form-element">
+                    <label for="city">Longitude:</label>
+                    <input type="text" id="lon" name="lon" placeholder value="13.526651668375687">
+                </div>
+
+                <div class="form-element">
+                    <div class="dropdown-group">
+                        <label for="categories">Select a category:</label>
+                        <select name="categories" id="categories"">
+                        <option value=""disabled hidden>Choose here</option>
+                        <option value=" Radweg" selected disabled hidden>Radweg</option>
+                            <option value="Parkplätze">Parkplätze</option>
+                            <option value="ÖPNV">ÖPNV</option>
+                            <option value="Verschmutzungen">Verschmutzungen</option>
+                            <option value="Baustellen">Baustellen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <figure>
+                    <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
+                </figure>
+
+                <div class="button-group">
+                    <input type="button" id="formUpdateLocation" value="Update">
+                    <input type="button" id="formDeleteLocation" value="Delete">
+                    <input type="button" id="formCancelLocation" value="Cancel">
+                </div>
             </form>
         </div>
-    </div>
+    </section>
 </body>
 
 </html>
