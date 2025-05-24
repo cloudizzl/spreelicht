@@ -10,17 +10,17 @@ UPDATE_SCREEN.style.display ="none";
 
 function login(e) {
     e.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const USERNAME = document.getElementById("username").value;
+    const PASSWORD = document.getElementById("password").value;
 
-    const validLogin = {
+    const VALID_LOGIN = {
         "admina": "password",
         "normalo": "password"
     };
 
-    if (validLogin[username] === password) {
-        document.getElementById("login-screen").style.display = "none";
-        document.getElementById("main-screen").style.display = "block";
+    if (VALID_LOGIN[USERNAME] === PASSWORD) {
+        LOGIN_SCREEN.style.display = "none";
+        MAIN_SCREEN.style.display = "block";
     } else {
         alert("Invalid username or password!")
     }
