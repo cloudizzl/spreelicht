@@ -1,6 +1,6 @@
 # Beleg 3
 - [x] GIT_REPO/public/index.html
-- [ ] nur Login-Screen mit Header, der den Namen der WebApp enthält und mit Footer, der Impressum und Link zur Datenschutzerklärung enthält, angezeigt werden
+- [X] nur Login-Screen mit Header, der den Namen der WebApp enthält und mit Footer, der Impressum und Link zur Datenschutzerklärung enthält, angezeigt werden
 
 ## Zwei User:innen einloggen
 - [ ] username: admina | password: password | role: admin | name: Mina
