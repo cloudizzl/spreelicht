@@ -8,9 +8,11 @@
     <meta name="description"
         content="SpreeLicht hilft Berliner:innen, Probleme im Stadtverkehr zu melden und zu verfolgen">
     <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/script.js" defer></script> -->
+    <script src="./js/script.js" defer></script>
 </head>
-
+<header>
+    <h1 id="welcome-heading">Welcome to SpreeLicht, <span id="username-display">username</span></h1>
+</header>
 <body>
 
     <!-- LOGIN SCREEN -->
@@ -27,7 +29,7 @@
                     autocomplete="current-password">
 
 
-                <button type="submit">Login</button>
+                <button type="submit" onclick="login()">Login</button>
 
                 <!-- optional -->
                 <input type="checkbox" id="remember" checked name="remember">
@@ -40,10 +42,6 @@
     <!-- MAIN SCREEN -->
     <section id="main-screen" class="screen" aria-labelledby="welcome-heading">
         <div class="main-container">
-            <header>
-                <h1 id="welcome-heading">Welcome to SpreeLicht, <span id="username-display">username</span></h1>
-            </header>
-
             <div class="dropdown-group">
                 <label for="locations">Select a location:</label>
                 <select name="locations" id="locations" aria-labelledby="location-label">
@@ -107,14 +105,6 @@
                         <span class="button-icon">←</span> Logout
                     </button>
                 </div>
-
-                <footer>
-                    <p>© 2025 SpreeLicht. All rights reserved.</p>
-                    <nav aria-label="copyright">
-                        <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
-                        <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
-                    </nav>
-                </footer>
         </div>
     </section>
 
@@ -270,4 +260,11 @@
     </section>
 </body>
 
+<footer>
+    <p>© 2025 SpreeLicht. All rights reserved.</p>
+    <nav aria-label="copyright">
+        <a href="https://www.htw-berlin.de/impressum/">Imprint</a>
+        <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
+    </nav>
+</footer>
 </html>
