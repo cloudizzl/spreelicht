@@ -10,8 +10,8 @@ ADD_SCREEN.style.display = "none";
 UPDATE_SCREEN.style.display = "none";
 
 const ADMIN = {
-    username: "12",
-    password: "1",
+    username: "admina",
+    password: "password",
     role: "admin",
     name: "Mina"
 };
@@ -31,7 +31,7 @@ LOGIN_FORM.addEventListener("submit", login);
 
 function login(e) {
     e.preventDefault();
-    let authorised;
+    
     const USERNAME = document.getElementById('username').value;
     const PASSWORD = document.getElementById('password').value;
 
@@ -45,39 +45,4 @@ function login(e) {
     } else {
         alert("Invalid username or password!")
     }
-    /*
-        const VALID_LOGIN = {
-            "admina": "password",
-            "normalo": "password"
-        };
-    */
-
-    /*
-        if(users.find(users.username == USERNAME && users.password == PASSWORD)){
-            LOGIN_SCREEN.style.display = "none";
-            MAIN_SCREEN.style.display = "block";
-            alert("WORKED")
-        }else {
-            authorised = false;
-            alert("Invalid username or password!")
-        }
-    */
-    /*
-        if (VALID_LOGIN[USERNAME] == PASSWORD) {
-            LOGIN_SCREEN.style.display = "none";
-            MAIN_SCREEN.style.display = "block";
-        } else {
-            alert("Invalid username or password!")
-        }
-    
-        if (USERNAME == "admina" && PASSWORD == "password"){
-            LOGIN_SCREEN.style.display = "none";
-            MAIN_SCREEN.style.display = "block";
-        } else if(USERNAME == "normalo" && PASSWORD == "password"){
-            LOGIN_SCREEN.style.display = "none";
-            MAIN_SCREEN.style.display = "block";
-        } else {
-            alert("Invalid username or password!")
-        }
-            */
 }
