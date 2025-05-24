@@ -50,8 +50,3 @@
 - [X] “Update”-Button
 - [X] “Delete”-Button
 - [X] “Cancel”-Button
-
-## NEUE TODOS
-- WAS IST EINE LISTE?????
-- Tabelle machen?
-- Header und Footer
