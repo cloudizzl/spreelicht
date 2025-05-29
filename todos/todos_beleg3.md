@@ -1,10 +1,10 @@
 # Beleg 3
-- [x] GIT_REPO/public/index.html
+- [X] GIT_REPO/public/index.html
 - [X] nur Login-Screen mit Header, der den Namen der WebApp enthält und mit Footer, der Impressum und Link zur Datenschutzerklärung enthält, angezeigt werden
 
 ## Zwei User:innen einloggen
-- [ ] username: admina | password: password | role: admin | name: Mina
-- [ ] username: normalo | password: password | role: non-admin | name: Norman
+- [X] username: admina | password: password | role: admin | name: Mina
+- [X] username: normalo | password: password | role: non-admin | name: Norman
 
 ## Admina kann...
 - [ ] neue Standorte anlegen
@@ -14,42 +14,42 @@
 - [ ] darf diese weder bearbeiten noch löschen
 
 ## Normalo
-- [ ] darf keine Standorte anlegen
+- [X] darf keine Standorte anlegen
 
 ## Screens
-- [ ] Header mit dem Name der Webapp wird IMMER angezeigt
-- [ ] Footer mit Impressum und Datenschutzerklärung IMMER angezeigt
-- [ ] Main-Screen zeigt nach erfolgreichem Login eine persönliche Willkommensnachricht an
+- [X] Header mit dem Name der Webapp wird IMMER angezeigt
+- [X] Footer mit Impressum und Datenschutzerklärung IMMER angezeigt
+- [X] Main-Screen zeigt nach erfolgreichem Login eine persönliche Willkommensnachricht an
 - [X] Main-Screen zeigt eine Liste von mind. drei real-existierenden, nicht-nachhaltigen Stanforten mit Titel, Straße, PLZ, Kategorie und Foto an
 - [ ] Standorte in der Liste sind anklickbar
 - [ ] Bei Klick auf Standort öffnet sich der Detail-Screen für diesen Standort
 - [ ] Inputfelder des Detail-Screen sind mit den Daten des Standorts belegt
 
 ## Admina-Story
-- [ ] Login-Kombo admina/password
-- [ ] Nach Klicken des Login-Buttons kommt Main-Screen mit Willkommensnachricht, die den Namen der Nutzer:in enthält ("Hallo Mina!" oder Ähnliches)
-- [ ] Liste mit den Standorten
-- [ ] "Add"-Button
-- [ ] "Logout"-Button
-- [ ] Klicken auf "Add"-Button öffnet "Add New Location"-Screen
+- [X] Login-Kombo admina/password
+- [X] Nach Klicken des Login-Buttons kommt Main-Screen mit Willkommensnachricht, die den Namen der Nutzer:in enthält ("Hallo Mina!" oder Ähnliches)
+- [X] Liste mit den Standorten
+- [X] "Add"-Button
+- [X] "Logout"-Button
+- [X] Klicken auf "Add"-Button öffnet "Add New Location"-Screen
 - [ ] Klicken auf einen Standort in der Standortliste öffnet "Detail"-Screen für diesen Standort
 - [ ] Admina bekommt "Update/Delete/Cancel"-Buttons angezeigt
-- [ ] Klicken auf Logout-Button, loggt admina aus und zeigt wieder den Login-Screen an
+- [X] Klicken auf Logout-Button, loggt admina aus und zeigt wieder den Login-Screen an
 
 ## Normalo-Story
-- [ ] Login-Kombo normalo /password
-- [ ]Nach Klicken des Login-Buttons kommt Main-Screen mit Willkommensnachricht, die den Namen der Nutzer:in enthält (“Hallo Norman!“ oder Ähnliches)
-- [ ] Liste mit den Standorten
-- [ ] „Logout“-Button
-- [ ] KEIN “Add”-Button
+- [X] Login-Kombo normalo /password
+- [X]Nach Klicken des Login-Buttons kommt Main-Screen mit Willkommensnachricht, die den Namen der Nutzer:in enthält (“Hallo Norman!“ oder Ähnliches)
+- [X] Liste mit den Standorten
+- [X] „Logout“-Button
+- [X] KEIN “Add”-Button
 - [ ] Klicken auf einen Standort in der Standortliste öffnet „Detail“-Screen für diesen Standort,
 - [ ] aber ohne „Update“ & „Delete“-Buttons. 
 - [ ] Wir brauchen einen „Close“ oder „Cancel“- Button, um den Screen wieder schließen zu können
-- [ ] Klicken auf den Logout-Button, loggt normalo aus und zeigt wieder den Login-Screen an
+- [X] Klicken auf den Logout-Button, loggt normalo aus und zeigt wieder den Login-Screen an
 
 ## Incorrect Login
-- [ ] Alert-Box oder so
-- [ ] Login-Screen darf nicht verschwinden
+- [X] Alert-Box oder so
+- [X] Login-Screen darf nicht verschwinden
 
 ## Admina Standort anlegen
 - [ ] Klicken des „Add“-Buttons -> „Add New Location“-Screen erscheint
