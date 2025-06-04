@@ -32,8 +32,8 @@
                 <button type="submit">Login</button>
 
                 <!-- optional -->
-                <input type="checkbox" id="remember" checked name="remember">
-                <label for="remember">Remember me</label>
+                <!-- <input type="checkbox" id="remember" checked name="remember"> -->
+                <!-- <label for="remember">Remember me</label>  -->
             </form>
         </div>
     </section>
@@ -117,6 +117,8 @@
             <form id="add-form" method="POST" aria-describedby="add-instructions">
                 <h3>Add a new location!</h3>
 
+
+                <!-- TODO dropdown für locations?????? -->
                 <div class="form-element">
                     <label for="locationName">Location:</label>
                     <input type="text" id="locationName" name="locationName" required aria-required="true">
@@ -150,19 +152,19 @@
 
                 <div class="form-element">
                     <label for="city">Latitude:</label>
-                    <input type="text" id="lat" name="lat" readonly value="52.45698925382436">
+                    <input type="text" id="lat" name="lat" readonly value="Will be set by your provided address.">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Longitude:</label>
-                    <input type="text" id="lon" name="lon" readonly value="13.526651668375687">
+                    <input type="text" id="lon" name="lon" readonly value="Will be set by your provided address.">
                 </div>
 
 
                 <!-- TODO required? -->
                 <div class="dropdown-group">
                     <label for="categories">Select a category:</label>
-                    <select name="categories" id="categories"">
+                    <select name="categories" id="categories">
                     <option value="" selected disabled hidden>Choose here</option>
                     <option value=" Radweg">Radweg</option>
                         <option value="Fußweg">Fußweg</option>
