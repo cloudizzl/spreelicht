@@ -43,7 +43,6 @@ let locationId = 4;
 let locations = [
     {
         id: 1,
-        locationName: "S-Bahn Verspätung",
         title: "S-Bahn Verspätung",
         description: "Häufige Verspätungen der S-Bahn",
         address: "Koppenstraße 3",
@@ -51,12 +50,11 @@ let locations = [
         city: "Berlin",
         category: "ÖPNV",
         image: "../ressources/images/Verspätung.jpeg",
-        lat: 52.5200,
-        lon: 13.4050
+        lat: 52.50975365892219,
+        lon: 13.435748486045767
     },
     {
         id: 2,
-        locationName: "S-Bahnverkehr unterbrochen",
         title: "S-Bahnverkehr in S Schöneweide unterbrochen",
         description: "Komplette Unterbrechung des S-Bahnverkehrs",
         address: "Michael-Brückner-Straße 42",
@@ -64,12 +62,11 @@ let locations = [
         city: "Berlin",
         category: "ÖPNV",
         image: null,
-        lat: 52.4579,
-        lon: 13.5264
+        lat: 52.45493933211213,
+        lon: 13.50934934001513
     },
     {
         id: 3,
-        locationName: "Leihfahrzeuge blockieren",
         title: "Leihfahrzeuge blockieren Straßen",
         description: "E-Scooter und Leihfahrräder blockieren Gehwege",
         address: "Manteuffelstraße 77",
@@ -77,8 +74,8 @@ let locations = [
         city: "Berlin",
         category: "Transportmittel-Sharing",
         image: "../ressources/images/Manteuffelstraße.JPG",
-        lat: 52.4988,
-        lon: 13.4187
+        lat: 52.49780397315911,
+        lon: 13.42520448234554
     }
 ];
 
@@ -90,6 +87,7 @@ let locations = [
 function initApp() {
     showScreen("login");
     setupEventListeners();
+    renderLocationsList();
 }
 
 function showScreen(screenName) {
@@ -119,9 +117,9 @@ function setupEventListeners() {
 
     // logging out
     document.getElementById("logoutButton").addEventListener("click", logout);
-    
+
     // pressing add button
-    document.getElementById("addButton").addEventListener("click",() => showScreen("add"));
+    document.getElementById("addButton").addEventListener("click", () => showScreen("add"));
 
     // submitting the new location
     ADD_FORM.addEventListener("submit", submitLocation);
@@ -129,13 +127,26 @@ function setupEventListeners() {
     // updating a location
     UPDATE_FORM.addEventListener("submit", updateLocation);
 
-    const formCancelBtn = document.getElementById("formCancelLocation");
-    const formUpdateBtn = document.getElementById("formUpdateLocation");
-    const formDeleteBtn = document.getElementById("formDeleteLocation");
+    const cancelBtnAdd = document.getElementById("formCancelLocationAdd");
+    const cancelBtnUpdate = document.getElementById("formCancelLocationUpdate")
+    const updateBtn = document.getElementById("formUpdateLocation");
+    const formBtn = document.getElementById("formDeleteLocation");
 
-    if (formCancelBtn) formCancelBtn.addEventListener("click", cancelForm);
-    if (formUpdateBtn) formUpdateBtn.addEventListener("click", updateLocation);
-    if (formDeleteBtn) formDeleteBtn.addEventListener("click", deleteLocation);
+    if (cancelBtnAdd) {
+        cancelBtnAdd.addEventListener("click", cancelForm);
+    }
+
+    if (cancelBtnUpdate) {
+        cancelBtnUpdate.addEventListener("click", cancelForm);
+    }
+
+    if (updateBtn) {
+        updateBtn.addEventListener("click", updateLocation);
+    }
+
+    if (formBtn) {
+        formBtn.addEventListener("click", deleteLocation);
+    }
 }
 
 function updateWelcomeMessage() {
@@ -145,20 +156,49 @@ function updateWelcomeMessage() {
     }
 }
 
-function updateUIForUser() {
+function disableButtons() {
     const buttons = [
         addButton = document.getElementById("addButton"),
         updateButton = document.getElementById("updateButton"),
-        deleteButton = document.getElementById("deleteButton")
+        deleteButton = document.getElementById("deleteButton"),
+        formUpdateLocationButton = document.getElementById("formUpdateLocation"),
+        formDeleteLocationButton = document.getElementById("formDeleteLocation")
     ]
-    
-    if(buttons) {
+
+    if (buttons) {
         buttons.forEach(button => {
             if (button) {
                 button.style.display = loggedInUser.role === "admin" ? "block" : "none";
             }
         });
     }
+}
+
+function changeHTMLForNonAdmin() {
+    updateCategories = document.querySelector("#update-screen select[name='categories']");
+    
+    const htmlElements = [
+        updateTitle = document.querySelector("#update-screen input[name='title']"),
+        updateDescription = document.querySelector("#update-screen input[name='description']"),
+        updateAddress = document.querySelector("#update-screen input[name='address']"),
+        updateZip = document.querySelector("#update-screen input[name='zip']")
+    ];
+
+    if (loggedInUser.role === "non-admin") {
+        document.getElementById("update-heading").innerHTML = "Details:";
+        if (htmlElements) {
+            htmlElements.forEach(elem => {
+                if (elem) {
+                    elem.readOnly = true;
+                }
+            });
+        }
+
+        if (updateCategories) {
+            updateCategories.disabled = true;
+        }
+    }
+
 }
 /******************************************************************************
  *                             LOGIN    /   LOGOUT                            *
@@ -176,7 +216,7 @@ function login(e) {
     if (user) {
         loggedInUser = user;
         updateWelcomeMessage();
-        updateUIForUser();
+        disableButtons();
         showScreen("main");
         // LOGIN_FORM.reset();
     } else {
@@ -202,7 +242,6 @@ function logout() {
 async function submitLocation(e) {
     e.preventDefault();
     const formData = {
-        locationName: document.getElementById('locationName').value.trim(),
         title: document.getElementById('title').value.trim(),
         description: document.getElementById('description').value.trim(),
         address: document.getElementById('address').value.trim(),
@@ -212,12 +251,12 @@ async function submitLocation(e) {
     };
 
     try {
-        const coords = await getCoordinates(formData.address, formData.zipCode, formData.city);
+        const coords = await getCoordinates(formData.address.toString(), formData.zipCode.toString(),
+            formData.city.toString());
 
         if (coords) {
             const newLocation = {
                 id: locationId++,
-                locationName: formData.locationName,
                 title: formData.title,
                 description: formData.description,
                 address: formData.address,
@@ -247,11 +286,14 @@ async function submitLocation(e) {
 async function getCoordinates(address, zipCode, city) {
     /* url = "https://nominatim.openstreetmap.org/search?street="+address
         +"&city="+city+"&country=Germany&postalcode="+zipCode+"&format=json" */
+    let uri = "https://nominatim.openstreetmap.org/search?street=" + address + "&city=" + city + "&country=Germany&postalcode=" + zipCode + "&format=json&limit=1";
+    let encoded = encodeURI(uri);
 
-    const url = "https://nominatim.openstreetmap.org/search?street=Koppenstraße%203&city=Berlin&country=Germany&postalcode=10243&format=json&limit=1";
+    //const url = "https://nominatim.openstreetmap.org/search?street=Koppenstraße%203&city=Berlin&country=Germany&postalcode=10243&format=json&limit=1";
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(encoded);
+        //const response = await fetch(url);
         const data = await response.json();
 
         // return coords
@@ -270,15 +312,20 @@ async function getCoordinates(address, zipCode, city) {
 
 function cancelForm() {
     showScreen("main");
-    currentLocationIndex = -1;
+    // currentLocationIndex = -1;
     clearAddForm();
 }
 
 function clearAddForm() {
-    if(ADD_FORM) {
+    if (ADD_FORM) {
         ADD_FORM.reset();
         const cityInput = document.getElementById('city');
+        const latInput = document.getElementById('lat');
+        const lonInput = document.getElementById('lon');
+
         if (cityInput) cityInput.value = 'Berlin';
+        if (latInput) latInput.value = 'Will be set by your provided address.';
+        if (lonInput) lonInput.value = 'Will be set by your provided address.';
     }
 }
 
@@ -290,24 +337,40 @@ function showUpdateScreen(locationIndex) {
     const location = locations[locationIndex];
 
     if (location) {
-        document.getElementById("update-locationName").value = location.locationName;
-        document.getElementById("update-title").value = location.title;
-        document.getElementById("update-description").value = location.description;
-        document.getElementById("update-address").value = location.address;
-        document.getElementById("update-zip").value = location.zipCode;
-        document.getElementById("update-city").value = location.city;
-        document.getElementById("update-categories").value = location.category;
+        document.querySelector("#update-screen input[name='title']").value = location.title;
+        document.querySelector("#update-screen input[name='description']").value = location.description;
+        document.querySelector("#update-screen input[name='address']").value = location.address;
+        document.querySelector("#update-screen input[name='zip']").value = location.zipCode;
+        document.querySelector("#update-screen input[name='city']").value = location.city;
+
+        /*let longitude = document.querySelector("#update-screen input[name='lat']");
+        longitude.value = location.lon;
+        longitude.style.disable = true;*/
+        document.querySelector("#update-screen input[name='lat']").value = location.lat;
+        document.querySelector("#update-screen input[name='lon']").value = location.lon;
+        /*let latitude = document.querySelector("#update-screen input[name='lon']");
+        latitude.value = location.lat;
+        latitude.style.disable = true;*/
+
+        document.querySelector("#update-screen select[name='categories']").value = location.category;
+        if (location.image != null) {
+            document.getElementById("update-location-img").src = location.image;
+        } else {
+            document.getElementById("update-location-img").src = null;
+        }
 
         showScreen("update");
+        changeHTMLForNonAdmin();
+
     }
 }
 
-async function updateLocation(){
+async function updateLocation() {
     const location = locations[currentLocationIndex];
-    
+
     // fill form with existing data
     const formData = {
-        locationName: document.getElementById('locationName').value.trim(),
+        //title: document.getElementById("#update-screen input[id='title']"),
         title: document.getElementById('title').value.trim(),
         description: document.getElementById('description').value.trim(),
         address: document.getElementById('address').value.trim(),
@@ -320,11 +383,11 @@ async function updateLocation(){
     const addressChanged = formData.address !== location.address ||
         formData.zipCode !== location.zipCode ||
         formData.city !== location.city;
-    
+
     // request new coords if address changed
-    try  {
-        let coordinates = {lat: location.lat, lon: location.lon};
-        
+    try {
+        let coordinates = { lat: location.lat, lon: location.lon };
+
         if (addressChanged) {
             coordinates = await getCoordinates(formData.address, formData.zipCode, formData.city);
             if (!coordinates) {
@@ -335,7 +398,6 @@ async function updateLocation(){
         // Update the location object
         locations[currentLocationIndex] = {
             ...location,
-            locationName: formData.locationName,
             title: formData.title,
             description: formData.description,
             address: formData.address,
@@ -345,11 +407,11 @@ async function updateLocation(){
             lat: coordinates.lat,
             lon: coordinates.lon
         };
-        
+
         // renderLocationsList();
         showScreen("main");
         alert("Location updated successfully!");
-    }catch (error) {
+    } catch (error) {
         console.error("Error updating location:", error);
         alert("Error updating location. Please try again.");
     }
@@ -366,11 +428,13 @@ function deleteLocation() {
 }
 
 /******************************************************************************
- *                       LOCATION FUNCTION                                    *
+ *                      LOCATION FUNCTIONS                                    *
  ******************************************************************************/
 
 function renderLocationsList() {
-    if (!LOCATIONS_LIST) return;
+    if (!LOCATIONS_LIST) {
+        return;
+    }
 
     LOCATIONS_LIST.innerHTML = "";
 
@@ -378,8 +442,7 @@ function renderLocationsList() {
         const locationCard = document.createElement("article");
         locationCard.className = "location-card";
         locationCard.setAttribute("role", "listitem");
-        locationCard.style.cursor = "pointer";
-        
+
         locationCard.innerHTML = `
             <h3>${location.title}</h3>
             <address>
@@ -397,8 +460,8 @@ function renderLocationsList() {
         `;
 
         // Add click event listener
-        locationCard.addEventListener("click", () => showLocationDetails(index));
-        
+        locationCard.addEventListener("click", () => showUpdateScreen(index));
+
         LOCATIONS_LIST.appendChild(locationCard);
     });
 }

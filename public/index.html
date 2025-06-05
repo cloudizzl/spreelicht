@@ -13,6 +13,7 @@
 <header>
     <h1 id="welcome-heading">Welcome to SpreeLicht!</h1>
 </header>
+
 <body>
 
     <!-- LOGIN SCREEN -->
@@ -59,6 +60,7 @@
                 <h2 id="locations-heading">Current reports</h2>
                 <!-- Standorte -->
                 <div class="locations-list" role="list">
+                    <!--
                     <article class="location-card" role="listitem">
                         <h3>S-Bahn Verspätung</h3>
                         <address>
@@ -71,7 +73,7 @@
                                 alt="S-Bahn Verspätung: Anzeigetafel mit Verspätungsinformation" loading="lazy">
                         </figure>
                     </article>
-
+                    
                     <article class="location-card" role="listitem">
                         <h3>S-Bahnverkehr in S Schöneweide unterbrochen </h3>
                         <address>
@@ -94,6 +96,7 @@
                                 alt="Mehrere E-Scooter und Leihfahrräder blockieren den Gehweg" loading="lazy">
                         </figure>
                     </article>
+                    -->
                 </div>
 
                 <div class="button-group" role="toolbar" aria-label="main-actions">
@@ -117,8 +120,8 @@
                 <h3>Add a new location!</h3>
 
                 <!-- <div class="form-element"> -->
-                    <!-- <label for="locationName">Location:</label> -->
-                    <!-- <input type="text" id="locationName" name="locationName" required aria-required="true"> -->
+                <!-- <label for="locationName">Location:</label> -->
+                <!-- <input type="text" id="locationName" name="locationName" required aria-required="true"> -->
                 <!-- </div> -->
 
                 <div class="form-element">
@@ -157,12 +160,11 @@
                     <input type="text" id="lon" name="lon" readonly value="Will be set by your provided address.">
                 </div>
 
-                <!-- TODO required? -->
                 <div class="dropdown-group">
                     <label for="categories">Select a category:</label>
-                    <select name="categories" id="categories">
-                    <option value="" selected disabled hidden>Choose here</option>
-                    <option value=" Radweg">Radweg</option>
+                    <select name="categories" id="categories" required>
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value=" Radweg">Radweg</option>
                         <option value="Fußweg">Fußweg</option>
                         <option value="ÖPNV">ÖPNV</option>
                         <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
@@ -180,7 +182,7 @@
                 </div>
 
                 <input type="submit" id="formSubmitLocation" value="Add">
-                <input type="button" id="formCancelLocation" value="Cancel">
+                <input type="button" id="formCancelLocationAdd" value="Cancel">
             </form>
         </div>
     </section>
@@ -189,11 +191,11 @@
     <!-- UPDATE/DELETE-SCREEN -->
     <section id="update-screen" class="screen" aria-labelledby="update-title">
         <div class="update-container">
-            <form action="/update" method="POST aria-describedby=" update-instructions">
-                <h3>Update a location!</h3>
-                <label for="locationName">Location:</label>
+            <form id="update-form" action="/update" method="POST aria-describedby=" update-instructions">
+                <h3 id="update-heading">Update a location!</h3>
+                <!-- <label for="locationName">Location:</label>
                 <input type="text" id="locationName" name="locationName" placeholder
-                    value="HTW-Berlin Campus-Wilhelminenhof"><br><br>
+                    value="HTW-Berlin Campus-Wilhelminenhof"><br><br> -->
 
                 <div class="form-element">
                     <label for="title">Title:</label>
@@ -217,17 +219,17 @@
 
                 <div class="form-element">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" placeholder value="Berlin">
+                    <input type="text" id="city" name="city" readonly value="Berlin">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Latitude:</label>
-                    <input type="text" id="lat" name="lat" placeholder value="52.45698925382436">
+                    <input type="text" id="lat" name="lat" readonly placeholder value="52.45698925382436">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Longitude:</label>
-                    <input type="text" id="lon" name="lon" placeholder value="13.526651668375687">
+                    <input type="text" id="lon" name="lon" readonly placeholder value="13.526651668375687">
                 </div>
 
                 <div class="form-element">
@@ -236,22 +238,26 @@
                         <select name="categories" id="categories"">
                         <option value=""disabled hidden>Choose here</option>
                         <option value=" Radweg" selected disabled hidden>Radweg</option>
-                            <option value="Parkplätze">Parkplätze</option>
+                            <option value="Fußweg">Fußweg</option>
                             <option value="ÖPNV">ÖPNV</option>
-                            <option value="Verschmutzungen">Verschmutzungen</option>
+                            <option value="Park & Ride Parkplätze">Park & Ride Parkplätze</option>
+                            <option value="Verschmutzungen">Verschmutzungen von
+                                öffentlichen Plätzen und Straßen</option>
+                            <option value="Luftverschmutzung">Luftverschmutzung</option>
                             <option value="Baustellen">Baustellen</option>
+                            <option value="Transportmittel-Sharing">Transportmittel-Sharing</option>
                         </select>
                     </div>
                 </div>
 
                 <figure>
-                    <img src="../ressources/images/Campus-Wilhelminenhof-Berlin.jpg" alt="Campus-Wilhelminenhof-Berlin">
+                    <img id="update-location-img" alt="No image available">
                 </figure>
 
                 <div class="button-group">
                     <input type="button" id="formUpdateLocation" value="Update">
                     <input type="button" id="formDeleteLocation" value="Delete">
-                    <input type="button" id="formCancelLocation" value="Cancel">
+                    <input type="button" id="formCancelLocationUpdate" value="Cancel">
                 </div>
             </form>
         </div>
@@ -265,4 +271,5 @@
         <a href="https://www.htw-berlin.de/datenschutz/">Privacy Policy</a>
     </nav>
 </footer>
+
 </html>

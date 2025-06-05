@@ -42,9 +42,9 @@
 - [X] Liste mit den Standorten
 - [X] „Logout“-Button
 - [X] KEIN “Add”-Button
-- [ ] Klicken auf einen Standort in der Standortliste öffnet „Detail“-Screen für diesen Standort,
-- [ ] aber ohne „Update“ & „Delete“-Buttons. 
-- [ ] Wir brauchen einen „Close“ oder „Cancel“- Button, um den Screen wieder schließen zu können
+- [X] Klicken auf einen Standort in der Standortliste öffnet „Detail“-Screen für diesen Standort,
+- [X] aber ohne „Update“ & „Delete“-Buttons. 
+- [X] Wir brauchen einen „Close“ oder „Cancel“- Button, um den Screen wieder schließen zu können
 - [X] Klicken auf den Logout-Button, loggt normalo aus und zeigt wieder den Login-Screen an
 
 ## Incorrect Login
@@ -52,14 +52,14 @@
 - [X] Login-Screen darf nicht verschwinden
 
 ## Admina Standort anlegen
-- [ ] Klicken des „Add“-Buttons -> „Add New Location“-Screen erscheint
-- [ ] User befüllt die „required“ Inputfelder des Formulars
-- [ ] User klickt „Save/Add/Speicher“-Button
-- [ ] Eingegebene Adresse muss in Geokoordinaten konvertiert werden -> Anfrage an einen Geo-Webservice stellen
-- [ ] Erfolgreiche Anfrage, d.h., der Geo-Webservice schickt Geokoordinaten für die Adresse zurück:
-    - [ ] Lat/lon–Properties des Standortes mit erhaltenen Geokoordinaten belegen
-    - [ ] Add-Screen schließen und Main-Screen anzeigen
-    - [ ] Neuer Standort befindet sich in der Liste
+- [X] Klicken des „Add“-Buttons -> „Add New Location“-Screen erscheint
+- [X] User befüllt die „required“ Inputfelder des Formulars
+- [X] User klickt „Save/Add/Speicher“-Button
+- [X] Eingegebene Adresse muss in Geokoordinaten konvertiert werden -> Anfrage an einen Geo-Webservice stellen
+- [X] Erfolgreiche Anfrage, d.h., der Geo-Webservice schickt Geokoordinaten für die Adresse zurück:
+    - [X] Lat/lon–Properties des Standortes mit erhaltenen Geokoordinaten belegen
+    - [X] Add-Screen schließen und Main-Screen anzeigen
+    - [X] Neuer Standort befindet sich in der Liste
 - [ ] Anfrage war nicht erfolgreich, der Geo-Webservice liefert keine Geokoordinaten für die Adresse: 
     - [ ] Eine Usermessage wird angezeigt, der „Add“-Screen verschwindet nicht
     - [ ] Nutzer:in muss Adresse anpassen oder „cancel"-Button drücken

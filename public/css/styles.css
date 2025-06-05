@@ -254,14 +254,14 @@ footer a:hover {
         --spacing-xl: 20px;
         --spacing-l: 15px;
     }
-    
-    .login-container, 
+
+    .login-container,
     .main-container,
     .add-container,
     .update-container {
         padding: var(--spacing-l);
     }
-    
+
     .locations-list {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
@@ -274,20 +274,20 @@ footer a:hover {
         --spacing-xl: 16px;
         --spacing-m: 12px;
     }
-    
+
     h1 {
         font-size: 1.5rem;
     }
-    
+
     .button-group {
         flex-direction: column;
     }
-    
+
     .action-button {
         flex: 1 1 auto;
         width: 100%;
     }
-    
+
     footer nav {
         flex-direction: column;
         align-items: center;
@@ -300,12 +300,12 @@ footer a:hover {
         --font-size-base: 13px;
         --spacing-s: 6px;
     }
-    
+
     .screen {
         padding: 10px;
     }
-    
-    .login-container, 
+
+    .login-container,
     .main-container,
     .add-container,
     .update-container {
