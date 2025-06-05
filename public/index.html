@@ -126,43 +126,43 @@
 
                 <div class="form-element">
                     <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required aria-required="true">
+                    <input type="text" id="title-add" name="title" required aria-required="true">
                 </div>
 
                 <div class="form-element">
                     <label for="description">Description:</label>
-                    <textarea id="description" name="description" rows="3" aria-label="description"></textarea>
+                    <textarea id="description-add" name="description" rows="3" aria-label="description"></textarea>
                 </div>
 
                 <div class="form-element">
                     <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" required aria-required="true">
+                    <input type="text" id="address-add" name="address" required aria-required="true">
                 </div>
 
                 <div class="form-element">
                     <label for="zip">Zip code:</label>
-                    <input type="number" id="zip" name="zip" required aria-required="true" min="10000" max="14999"
+                    <input type="number" id="zip-add" name="zip" required aria-required="true" min="10000" max="14999"
                         pattern="[0-9]{5}" inputmode="numeric">
                 </div>
 
                 <div class="form-element">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" readonly value="Berlin">
+                    <input type="text" id="city-add" name="city" readonly value="Berlin">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Latitude:</label>
-                    <input type="text" id="lat" name="lat" readonly value="Will be set by your provided address.">
+                    <input type="text" id="lat-add" name="lat" readonly value="Will be set by your provided address.">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Longitude:</label>
-                    <input type="text" id="lon" name="lon" readonly value="Will be set by your provided address.">
+                    <input type="text" id="lon-add" name="lon" readonly value="Will be set by your provided address.">
                 </div>
 
                 <div class="dropdown-group">
                     <label for="categories">Select a category:</label>
-                    <select name="categories" id="categories" required>
+                    <select name="categories" id="categories-add" required>
                         <option value="" selected disabled hidden>Choose here</option>
                         <option value=" Radweg">Radweg</option>
                         <option value="Fußweg">Fußweg</option>
@@ -181,7 +181,7 @@
                     <input type="file" id="image-upload" name="image" accept="image/*">
                 </div>
 
-                <input type="submit" id="formSubmitLocation" value="Add">
+                <input type="submit " id="formSubmitLocation" value="Add">
                 <input type="button" id="formCancelLocationAdd" value="Cancel">
             </form>
         </div>
@@ -191,7 +191,7 @@
     <!-- UPDATE/DELETE-SCREEN -->
     <section id="update-screen" class="screen" aria-labelledby="update-title">
         <div class="update-container">
-            <form id="update-form" action="/update" method="POST aria-describedby=" update-instructions">
+            <form id="update-form" aria-describedby=" update-instructions">
                 <h3 id="update-heading">Update a location!</h3>
                 <!-- <label for="locationName">Location:</label>
                 <input type="text" id="locationName" name="locationName" placeholder
@@ -199,43 +199,43 @@
 
                 <div class="form-element">
                     <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" placeholder value="Campus-Wilhelminenhof-Berlin">
+                    <input type="text" id="title-update" name="title" placeholder value="Campus-Wilhelminenhof-Berlin">
                 </div>
 
                 <div class="form-element">
                     <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" placeholder value="HTW-Berlin">
+                    <input type="text" id="description-update" name="description" placeholder value="HTW-Berlin">
                 </div>
 
                 <div class="form-element">
                     <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" placeholder value="Wilhelminenhofstraße 75A">
+                    <input type="text" id="address-update" name="address" placeholder value="Wilhelminenhofstraße 75A">
                 </div>
 
                 <div class="form-element">
                     <label for="zip">Zip code:</label>
-                    <input type="number" id="zip" name="zip" placeholder value="12459">
+                    <input type="number" id="zip-update" name="zip" placeholder value="12459">
                 </div>
 
                 <div class="form-element">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" readonly value="Berlin">
+                    <input type="text" id="city-update" name="city" readonly value="Berlin">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Latitude:</label>
-                    <input type="text" id="lat" name="lat" readonly placeholder value="52.45698925382436">
+                    <input type="text" id="lat-update" name="lat" readonly placeholder value="52.45698925382436">
                 </div>
 
                 <div class="form-element">
                     <label for="city">Longitude:</label>
-                    <input type="text" id="lon" name="lon" readonly placeholder value="13.526651668375687">
+                    <input type="text" id="lon-update" name="lon" readonly placeholder value="13.526651668375687">
                 </div>
 
                 <div class="form-element">
                     <div class="dropdown-group">
                         <label for="categories">Select a category:</label>
-                        <select name="categories" id="categories"">
+                        <select name="categories" id="categories-update">
                         <option value=""disabled hidden>Choose here</option>
                         <option value=" Radweg" selected disabled hidden>Radweg</option>
                             <option value="Fußweg">Fußweg</option>
@@ -253,9 +253,8 @@
                 <figure>
                     <img id="update-location-img" alt="No image available">
                 </figure>
-
                 <div class="button-group">
-                    <input type="button" id="formUpdateLocation" value="Update">
+                    <input type="submit" id="formUpdateLocation" value="Update">
                     <input type="button" id="formDeleteLocation" value="Delete">
                     <input type="button" id="formCancelLocationUpdate" value="Cancel">
                 </div>

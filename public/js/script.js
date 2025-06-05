@@ -122,14 +122,14 @@ function setupEventListeners() {
     document.getElementById("addButton").addEventListener("click", () => showScreen("add"));
 
     // submitting the new location
-    ADD_FORM.addEventListener("submit", submitLocation);
+    //ADD_FORM.addEventListener("submit", submitLocation);
 
     // updating a location
     UPDATE_FORM.addEventListener("submit", updateLocation);
 
     const cancelBtnAdd = document.getElementById("formCancelLocationAdd");
     const cancelBtnUpdate = document.getElementById("formCancelLocationUpdate")
-    const updateBtn = document.getElementById("formUpdateLocation");
+    //const updateBtn = document.getElementById("formUpdateLocation");
     const formBtn = document.getElementById("formDeleteLocation");
 
     if (cancelBtnAdd) {
@@ -140,9 +140,9 @@ function setupEventListeners() {
         cancelBtnUpdate.addEventListener("click", cancelForm);
     }
 
-    if (updateBtn) {
+    /*if (updateBtn) {
         updateBtn.addEventListener("click", updateLocation);
-    }
+    }*/
 
     if (formBtn) {
         formBtn.addEventListener("click", deleteLocation);
@@ -159,8 +159,6 @@ function updateWelcomeMessage() {
 function disableButtons() {
     const buttons = [
         addButton = document.getElementById("addButton"),
-        updateButton = document.getElementById("updateButton"),
-        deleteButton = document.getElementById("deleteButton"),
         formUpdateLocationButton = document.getElementById("formUpdateLocation"),
         formDeleteLocationButton = document.getElementById("formDeleteLocation")
     ]
@@ -168,7 +166,7 @@ function disableButtons() {
     if (buttons) {
         buttons.forEach(button => {
             if (button) {
-                button.style.display = loggedInUser.role === "admin" ? "block" : "none";
+                button.style.display = loggedInUser.role === "admin" ? "inline-block" : "none";
             }
         });
     }
@@ -177,19 +175,19 @@ function disableButtons() {
 function changeHTMLForNonAdmin() {
     updateCategories = document.querySelector("#update-screen select[name='categories']");
     
-    const htmlElements = [
-        updateTitle = document.querySelector("#update-screen input[name='title']"),
-        updateDescription = document.querySelector("#update-screen input[name='description']"),
-        updateAddress = document.querySelector("#update-screen input[name='address']"),
-        updateZip = document.querySelector("#update-screen input[name='zip']")
+    const formFields = [
+        updateTitle = document.querySelector("title-update"),
+        updateDescription = document.querySelector("description-update"),
+        updateAddress = document.querySelector("address-update"),
+        updateZip = document.querySelector("zip-update")
     ];
 
-    if (loggedInUser.role === "non-admin") {
+    if (loggedInUser && loggedInUser.role === "non-admin") {
         document.getElementById("update-heading").innerHTML = "Details:";
-        if (htmlElements) {
-            htmlElements.forEach(elem => {
-                if (elem) {
-                    elem.readOnly = true;
+        if (formFields) {
+            formFields.forEach(field => {
+                if (field) {
+                    field.readOnly = true;
                 }
             });
         }
@@ -217,6 +215,7 @@ function login(e) {
         loggedInUser = user;
         updateWelcomeMessage();
         disableButtons();
+        renderLocationsList();
         showScreen("main");
         // LOGIN_FORM.reset();
     } else {
@@ -242,12 +241,12 @@ function logout() {
 async function submitLocation(e) {
     e.preventDefault();
     const formData = {
-        title: document.getElementById('title').value.trim(),
-        description: document.getElementById('description').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        zipCode: document.getElementById('zip').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        category: document.getElementById('categories').value
+        title: document.getElementById('title-add').value.trim(),
+        description: document.getElementById('description-add').value.trim(),
+        address: document.getElementById('address-add').value.trim(),
+        zipCode: document.getElementById('zip-add').value.trim(),
+        city: document.getElementById('city-add').value.trim(),
+        category: document.getElementById('categories-add').value
     };
 
     try {
@@ -289,11 +288,8 @@ async function getCoordinates(address, zipCode, city) {
     let uri = "https://nominatim.openstreetmap.org/search?street=" + address + "&city=" + city + "&country=Germany&postalcode=" + zipCode + "&format=json&limit=1";
     let encoded = encodeURI(uri);
 
-    //const url = "https://nominatim.openstreetmap.org/search?street=Koppenstraße%203&city=Berlin&country=Germany&postalcode=10243&format=json&limit=1";
-
     try {
         const response = await fetch(encoded);
-        //const response = await fetch(url);
         const data = await response.json();
 
         // return coords
@@ -312,20 +308,19 @@ async function getCoordinates(address, zipCode, city) {
 
 function cancelForm() {
     showScreen("main");
-    // currentLocationIndex = -1;
     clearAddForm();
 }
 
 function clearAddForm() {
     if (ADD_FORM) {
         ADD_FORM.reset();
-        const cityInput = document.getElementById('city');
-        const latInput = document.getElementById('lat');
-        const lonInput = document.getElementById('lon');
+        const cityInput = document.getElementById("city");
+        const latInput = document.getElementById("lat");
+        const lonInput = document.getElementById("lon");
 
-        if (cityInput) cityInput.value = 'Berlin';
-        if (latInput) latInput.value = 'Will be set by your provided address.';
-        if (lonInput) lonInput.value = 'Will be set by your provided address.';
+        if (cityInput) cityInput.value = "Berlin";
+        if (latInput) latInput.value = "Will be set by your provided address.";
+        if (lonInput) lonInput.value = "Will be set by your provided address.";
     }
 }
 
@@ -337,27 +332,33 @@ function showUpdateScreen(locationIndex) {
     const location = locations[locationIndex];
 
     if (location) {
-        document.querySelector("#update-screen input[name='title']").value = location.title;
-        document.querySelector("#update-screen input[name='description']").value = location.description;
-        document.querySelector("#update-screen input[name='address']").value = location.address;
-        document.querySelector("#update-screen input[name='zip']").value = location.zipCode;
-        document.querySelector("#update-screen input[name='city']").value = location.city;
+        const titleField = document.querySelector("#update-screen input[name='title']");
+        const descField = document.querySelector("#update-screen textarea[name='description']");
+        const addressField = document.querySelector("#update-screen input[name='address']");
+        const zipField = document.querySelector("#update-screen input[name='zip']");
+        const cityField = document.querySelector("#update-screen input[name='city']");
+        const latField = document.querySelector("#update-screen input[name='lat']");
+        const lonField = document.querySelector("#update-screen input[name='lon']");
+        const categoryField = document.querySelector("#update-screen select[name='categories']");
+        const imageElement = document.getElementById("update-location-img");
 
-        /*let longitude = document.querySelector("#update-screen input[name='lat']");
-        longitude.value = location.lon;
-        longitude.style.disable = true;*/
-        document.querySelector("#update-screen input[name='lat']").value = location.lat;
-        document.querySelector("#update-screen input[name='lon']").value = location.lon;
-        /*let latitude = document.querySelector("#update-screen input[name='lon']");
-        latitude.value = location.lat;
-        latitude.style.disable = true;*/
+        if (titleField) titleField.value = location.title;
+        if (descField) descField.value = location.description;
+        if (addressField) addressField.value = location.address;
+        if (zipField) zipField.value = location.zipCode;
+        if (cityField) cityField.value = location.city;
+        if (latField) latField.value = location.lat;
+        if (lonField) lonField.value = location.lon;
+        if (categoryField) categoryField.value = location.category;
 
-        document.querySelector("#update-screen select[name='categories']").value = location.category;
-        if (location.image != null) {
-            document.getElementById("update-location-img").src = location.image;
-        } else {
-            document.getElementById("update-location-img").src = null;
-        }
+        if (imageElement) {
+            if (location.image) {
+                imageElement.src = location.image;
+                imageElement.style.display = "block";
+            } else {
+                imageElement.style.display = "none";
+            }
+        }            
 
         showScreen("update");
         changeHTMLForNonAdmin();
@@ -365,24 +366,32 @@ function showUpdateScreen(locationIndex) {
     }
 }
 
-async function updateLocation() {
+async function updateLocation(e) {
+    e.preventDefault();
+    if (currentLocationIndex === -1 || !locations[currentLocationIndex]) {
+        alert("No location selected");
+        return;
+    }
+
     const location = locations[currentLocationIndex];
 
+    console.log("Update Location has been called")
+
+    
     // fill form with existing data
     const formData = {
-        //title: document.getElementById("#update-screen input[id='title']"),
-        title: document.getElementById('title').value.trim(),
-        description: document.getElementById('description').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        zipCode: document.getElementById('zip').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        category: document.querySelector("#update-screen select[name='categories']").value
+        title: document.getElementById('title-update').value.trim(),
+        description: document.getElementById('description-update').value.trim(),
+        address: document.getElementById('address-update').value.trim(),
+        zipCode: document.getElementById('zip-update').value.trim(),
+        city: document.getElementById('city-update').value.trim(),
+        category: document.getElementById("categories-update").value
     };
 
     // save address change
-    const addressChanged = formData.address !== location.address ||
-        formData.zipCode !== location.zipCode ||
-        formData.city !== location.city;
+    const addressChanged = formData.address != location.address ||
+        formData.zipCode != location.zipCode ||
+        formData.city != location.city;
 
     // request new coords if address changed
     try {
@@ -408,7 +417,7 @@ async function updateLocation() {
             lon: coordinates.lon
         };
 
-        // renderLocationsList();
+        renderLocationsList();
         showScreen("main");
         alert("Location updated successfully!");
     } catch (error) {
