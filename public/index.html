@@ -42,7 +42,7 @@
     <!-- MAIN SCREEN -->
     <section id="main-screen" class="screen" aria-labelledby="welcome-heading">
         <div class="main-container">
-            <div class="dropdown-group">
+            <!-- <div class="dropdown-group">
                 <label for="locations">Select a location:</label>
                 <select name="locations" id="locations" aria-labelledby="location-label">
                     <option value="" selected disabled hidden>Choose here</option>
@@ -52,7 +52,7 @@
                         <option value="Oberschöneweide">Oberschöneweide</option>
                     </optgroup>
                 </select>
-            </div>
+            </div> -->
 
 
             <section aria-labelledby="locations-heading">
@@ -96,7 +96,6 @@
                     </article>
                 </div>
 
-
                 <div class="button-group" role="toolbar" aria-label="main-actions">
                     <button type="button" id="addButton" class="action-button" aria-label="add new report">
                         <span class="button-icon">+</span> Add
@@ -117,12 +116,10 @@
             <form id="add-form" method="POST" aria-describedby="add-instructions">
                 <h3>Add a new location!</h3>
 
-
-                <!-- TODO dropdown für locations?????? -->
-                <div class="form-element">
-                    <label for="locationName">Location:</label>
-                    <input type="text" id="locationName" name="locationName" required aria-required="true">
-                </div>
+                <!-- <div class="form-element"> -->
+                    <!-- <label for="locationName">Location:</label> -->
+                    <!-- <input type="text" id="locationName" name="locationName" required aria-required="true"> -->
+                <!-- </div> -->
 
                 <div class="form-element">
                     <label for="title">Title:</label>
@@ -160,7 +157,6 @@
                     <input type="text" id="lon" name="lon" readonly value="Will be set by your provided address.">
                 </div>
 
-
                 <!-- TODO required? -->
                 <div class="dropdown-group">
                     <label for="categories">Select a category:</label>
@@ -179,7 +175,7 @@
                 </div>
 
                 <div class="form-group file-upload">
-                    <label for="image-upload">Uplaod picture (optional):</label>
+                    <label for="image-upload">Upload picture (optional):</label>
                     <input type="file" id="image-upload" name="image" accept="image/*">
                 </div>
 

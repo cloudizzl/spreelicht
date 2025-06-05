@@ -178,7 +178,7 @@ function login(e) {
         updateWelcomeMessage();
         updateUIForUser();
         showScreen("main");
-        LOGIN_FORM.reset();
+        // LOGIN_FORM.reset();
     } else {
         alert("Invalid username or password!")
     }
@@ -190,7 +190,7 @@ function logout() {
     if (welcomeHeading) {
         welcomeHeading.textContent = "Welcome to Spreelicht!";
     }
-    LOGIN_FORM.reset();
+    // LOGIN_FORM.reset();
     showScreen("login");
 }
 
