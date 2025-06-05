@@ -7,11 +7,10 @@
 - [X] username: normalo | password: password | role: non-admin | name: Norman
 
 ## Admina kann...
-- [ ] neue Standorte anlegen
-- [ ] existierende Standorte löschen
-- [ ] existierende Standorte bearbeiten
-- [ ] darf sich alle Standorte angucken
-- [ ] darf diese weder bearbeiten noch löschen
+- [X] neue Standorte anlegen
+- [X] existierende Standorte löschen
+- [X] existierende Standorte bearbeiten
+- [X] darf sich alle Standorte angucken
 
 ## Normalo
 - [X] darf keine Standorte anlegen
@@ -21,9 +20,9 @@
 - [X] Footer mit Impressum und Datenschutzerklärung IMMER angezeigt
 - [X] Main-Screen zeigt nach erfolgreichem Login eine persönliche Willkommensnachricht an
 - [X] Main-Screen zeigt eine Liste von mind. drei real-existierenden, nicht-nachhaltigen Stanforten mit Titel, Straße, PLZ, Kategorie und Foto an
-- [ ] Standorte in der Liste sind anklickbar
-- [ ] Bei Klick auf Standort öffnet sich der Detail-Screen für diesen Standort
-- [ ] Inputfelder des Detail-Screen sind mit den Daten des Standorts belegt
+- [X] Standorte in der Liste sind anklickbar
+- [X] Bei Klick auf Standort öffnet sich der Detail-Screen für diesen Standort
+- [X] Inputfelder des Detail-Screen sind mit den Daten des Standorts belegt
 
 ## Admina-Story
 - [X] Login-Kombo admina/password
@@ -32,8 +31,8 @@
 - [X] "Add"-Button
 - [X] "Logout"-Button
 - [X] Klicken auf "Add"-Button öffnet "Add New Location"-Screen
-- [ ] Klicken auf einen Standort in der Standortliste öffnet "Detail"-Screen für diesen Standort
-- [ ] Admina bekommt "Update/Delete/Cancel"-Buttons angezeigt
+- [X] Klicken auf einen Standort in der Standortliste öffnet "Detail"-Screen für diesen Standort
+- [X] Admina bekommt "Update/Delete/Cancel"-Buttons angezeigt
 - [X] Klicken auf Logout-Button, loggt admina aus und zeigt wieder den Login-Screen an
 
 ## Normalo-Story
@@ -60,16 +59,16 @@
     - [X] Lat/lon–Properties des Standortes mit erhaltenen Geokoordinaten belegen
     - [X] Add-Screen schließen und Main-Screen anzeigen
     - [X] Neuer Standort befindet sich in der Liste
-- [ ] Anfrage war nicht erfolgreich, der Geo-Webservice liefert keine Geokoordinaten für die Adresse: 
-    - [ ] Eine Usermessage wird angezeigt, der „Add“-Screen verschwindet nicht
-    - [ ] Nutzer:in muss Adresse anpassen oder „cancel"-Button drücken
+- [X] Anfrage war nicht erfolgreich, der Geo-Webservice liefert keine Geokoordinaten für die Adresse: 
+    - [X] Eine Usermessage wird angezeigt, der „Add“-Screen verschwindet nicht
+    - [X] Nutzer:in muss Adresse anpassen oder „cancel"-Button drücken
 
 ## Admina Standort bearbeiten
-- [ ] admina klickt in der Standortliste im Main-Screen auf einen Standort -> der Details-Screen öffnet sich
-- [ ] alle Eigenschaften eines Standortes werden angezeigt. 
-- [ ] Ändert ‚admina‘ die Eigenschaften des Standortes, gibt, z.B., eine neue Adresse ein, dann müssen diese Änderung vorgenommen werden: 
-    - [ ] der Standort erhält neue lat/lon-Koordinaten. 
-- [ ] Löscht ‚admina‘ einen Standort, dann verschwindet der Standort in der Standortliste im Main-Screen
+- [X] admina klickt in der Standortliste im Main-Screen auf einen Standort -> der Details-Screen öffnet sich
+- [X] alle Eigenschaften eines Standortes werden angezeigt. 
+- [X] Ändert ‚admina‘ die Eigenschaften des Standortes, gibt, z.B., eine neue Adresse ein, dann müssen diese Änderung vorgenommen werden: 
+    - [X] der Standort erhält neue lat/lon-Koordinaten. 
+- [X] Löscht ‚admina‘ einen Standort, dann verschwindet der Standort in der Standortliste im Main-Screen
 
 Wichtig:
 Aktualisierungen der Standort-Daten oder das Löschen von Standorten müssen nicht extern gespeichert werden. D.h., wenn Sie Ihre index.html neu laden, sind die drei ursprünglichen Locations wieder da.

@@ -122,7 +122,7 @@ function setupEventListeners() {
     document.getElementById("addButton").addEventListener("click", () => showScreen("add"));
 
     // submitting the new location
-    //ADD_FORM.addEventListener("submit", submitLocation);
+    ADD_FORM.addEventListener("submit", submitLocation);
 
     // updating a location
     UPDATE_FORM.addEventListener("submit", updateLocation);
@@ -173,13 +173,13 @@ function disableButtons() {
 }
 
 function changeHTMLForNonAdmin() {
-    updateCategories = document.querySelector("#update-screen select[name='categories']");
-    
+    updateCategories = document.getElementById("categories-update");
+
     const formFields = [
-        updateTitle = document.querySelector("title-update"),
-        updateDescription = document.querySelector("description-update"),
-        updateAddress = document.querySelector("address-update"),
-        updateZip = document.querySelector("zip-update")
+        updateTitle = document.getElementById("title-update"),
+        updateDescription = document.getElementById("description-update"),
+        updateAddress = document.getElementById("address-update"),
+        updateZip = document.getElementById("zip-update")
     ];
 
     if (loggedInUser && loggedInUser.role === "non-admin") {
@@ -194,6 +194,19 @@ function changeHTMLForNonAdmin() {
 
         if (updateCategories) {
             updateCategories.disabled = true;
+        }
+    } else if (loggedInUser && loggedInUser.role === "admin") {
+        document.getElementById("update-heading").innerHTML = "Update a location!";
+        if (formFields) {
+            formFields.forEach(field => {
+                if (field) {
+                    field.readOnly = false;
+                }
+            });
+        }
+
+        if (updateCategories) {
+            updateCategories.disabled = false;
         }
     }
 
@@ -274,7 +287,7 @@ async function submitLocation(e) {
             clearAddForm();
             alert("Location added successfully!");
         } else {
-            alert("Could not find coordinates for this address.");
+            alert("Could not find coordinates for this address. Please check the address.");
         }
     } catch (error) {
         console.error("Error adding location:", error);
@@ -332,14 +345,14 @@ function showUpdateScreen(locationIndex) {
     const location = locations[locationIndex];
 
     if (location) {
-        const titleField = document.querySelector("#update-screen input[name='title']");
-        const descField = document.querySelector("#update-screen textarea[name='description']");
-        const addressField = document.querySelector("#update-screen input[name='address']");
-        const zipField = document.querySelector("#update-screen input[name='zip']");
-        const cityField = document.querySelector("#update-screen input[name='city']");
-        const latField = document.querySelector("#update-screen input[name='lat']");
-        const lonField = document.querySelector("#update-screen input[name='lon']");
-        const categoryField = document.querySelector("#update-screen select[name='categories']");
+        const titleField = document.getElementById("title-update");
+        const descField = document.getElementById("description-update");
+        const addressField = document.getElementById("address-update");
+        const zipField = document.getElementById("zip-update");
+        const cityField = document.getElementById("city-update");
+        const latField = document.getElementById("lat-update");
+        const lonField = document.getElementById("lon-update");
+        const categoryField = document.getElementById("categories-update");
         const imageElement = document.getElementById("update-location-img");
 
         if (titleField) titleField.value = location.title;
@@ -358,7 +371,7 @@ function showUpdateScreen(locationIndex) {
             } else {
                 imageElement.style.display = "none";
             }
-        }            
+        }
 
         showScreen("update");
         changeHTMLForNonAdmin();
@@ -377,7 +390,7 @@ async function updateLocation(e) {
 
     console.log("Update Location has been called")
 
-    
+
     // fill form with existing data
     const formData = {
         title: document.getElementById('title-update').value.trim(),
