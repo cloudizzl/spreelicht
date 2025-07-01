@@ -1,16 +1,40 @@
-/* const express = require("express");
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path")
 const app = express();
+const Location = require('./src/location.model.js')
 
-const port = process.env.PORT || 5000;
+// Middleware
+app.use(express.json()); // json parsing
+app.use(express.static(path.join(__dirname, '../public')));
 
-app.get("/", (req, res) => {
-  return res.status(200).send({
-    message: "Hello World!",
-  });
+// Endpoints
+app.get('/', (req, res) => {
+    res.send("Hello World!");
 });
 
-app.listen(port, () => {
-  console.log("Listening on " + port);
+app.post("/locs", async (req, res) => {
+    try {
+        const location = await Location.create(req.body);
+        res.status(200).json(location);
+    } catch (error) {
+        res.status(500).json({message: error.message});        
+    }
+});
+/*
+app.get("/locs" (req, res) => {
+
 });
 
-module.exports = app; */
+app.get("/locs" (req, res) => {
+
+});
+
+app.put("/locs" (req, res) => {
+
+});
+*/
+app.delete("/locs")
+
+let server = app.listen(3000, () => {
+    console.log("Running at port " + 3000) });
