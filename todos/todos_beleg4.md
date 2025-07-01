@@ -1,11 +1,11 @@
 [ ] MongoDB muss benutzt werden
-[ ] MongoDB auf https://ocean.f4.htw-berlin.de
-[ ] Datenbank besteht aus zwei Collections
+[X] MongoDB auf https://ocean.f4.htw-berlin.de
+[X] Datenbank besteht aus zwei Collections
     1. "Users" mit den Feldern:
-    [ ] username
-    [ ] password
-    [ ] name
-    [ ] role
+    [X] username
+    [X] password
+    [X] name
+    [X] role
     2. "Locations":
     [ ] mit den Feldern aus dem Detail/Update-Screen
     - Die drei Standorte müssen jetzt in die entsprechende DB-Collection übernommen werden und dürfen nicht mehr im JavaScript hart kodiert sein.
