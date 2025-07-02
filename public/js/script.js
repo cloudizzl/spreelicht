@@ -7,6 +7,7 @@ const ADD_FORM = document.getElementById("add-form")
 const UPDATE_FORM = document.getElementById("update-form");
 const LOCATIONS_LIST = document.querySelector(".locations-list");
 
+
 /*
 LOGIN_SCREEN.style.display = "block";
 MAIN_SCREEN.style.display = "none";

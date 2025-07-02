@@ -6,12 +6,14 @@ const Location = require('./src/location.model.js')
 
 // Middleware
 app.use(express.json()); // json parsing
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoints
+
 app.get('/', (req, res) => {
-    res.send(index.html);
+    res.sendFile(path.join(__dirname,'public','index.html'));
 });
+
 
 app.post("/locs", async (req, res) => {
     try {
