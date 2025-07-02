@@ -50,3 +50,98 @@ export const findAllUsers  = async function() {
     await client.close();
   }
 };
+
+export const findOneLocation = async function(locationId) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    const query = {_id: locationId};
+    const doc = await locations.findOne(query);
+    return doc;
+  } finally {
+    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
+
+export const findAllLocations = async function() {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    const query = {};
+    const cursor = locations.find(query);
+    // Print a message if no documents were found
+    if ((await locations.countDocuments(query)) === 0) {
+      console.log("No documents found!");
+      return null;
+    }
+    let docs = new Array();
+    for await (const doc of cursor) {
+      docs.push(doc);
+    }
+    return docs;
+  } finally {
+    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
+
+
+export const addLocation = async function(locationData) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    const result = await locations.insertOne(locationData);
+    // Print the ID of the inserted document
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    return result;
+  } finally {
+    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
+
+
+
+export const updateLocation = async function(locationId, locationData) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    const query = {_id: locationId};
+    const updateDoc = {
+      $set: locationData
+    };
+    const result = await locations.updateOne(query, updateDoc);
+    if (result.modifiedCount === 0) {
+      console.log("No documents matched the query. Updated 0 documents.");
+    }
+    return result;
+  } finally {
+    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
+
+
+export const deleteLocation = async function(locationId) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    const query = {_id: locationId};
+    const result = await locations.deleteOne(query);
+    if (result.deletedCount === 0) {
+      console.log("No documents matched the query. Deleted 0 documents.");
+    } else {
+      console.log(`Deleted document with _id: ${locationId}`);
+    }
+    return result;
+  } finally {
+    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
