@@ -105,48 +105,6 @@ export const addLocation = async function(locationData) {
   }
 };
 
-
-/*
-export const updateLocation = async function(locationId, locationData) {
-  const client = new MongoClient(uri);
-  try {
-    const database = client.db(db_name);
-    const locations = database.collection('locations');
-    const query = { _id: new ObjectId(locationId) };
-    const updateDoc = { $set: locationData };
-    console.log("Updating location with query:", query);
-    console.log("Update document:", updateDoc);
-    const result = await locations.updateOne(query, updateDoc);
-    if (result.matchedCount === 0) {
-      console.log("No documents matched the query. Updated 0 documents.");
-    }
-    return result;
-  } finally {
-    // Ensures that the client will close when finished and on error
-    await client.close();
-  }
-};
-
-
-export const deleteLocation = async function(locationId) {
-  const client = new MongoClient(uri);
-  try {
-    const database = client.db(db_name);
-    const locations = database.collection('locations');
-    let query;
-    try {
-      query = { _id: new ObjectId(locationId) };
-    } catch (e) {
-      query = { _id: locationId }; // fallback if not a valid ObjectId
-    }
-    const result = await locations.deleteOne(query);
-    console.log("Delete result:", result);
-    return result;
-  } finally {
-    await client.close();
-  }
-};
-*/
 export const updateLocation = async function(locationId, locationData) {
   const client = new MongoClient(uri);
   try {

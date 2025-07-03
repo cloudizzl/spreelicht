@@ -206,6 +206,7 @@ function logout() {
  ******************************************************************************/
 
 // TODO - add image upload functionality
+/*
 async function submitLocation(e) {
     e.preventDefault();
     const formData = {
@@ -216,6 +217,10 @@ async function submitLocation(e) {
         city: document.getElementById('city-add').value.trim(),
         category: document.getElementById('categories-add').value
     };
+    const imageInput = document.getElementById('image-upload-add');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
 
     try {
         const coords = await getCoordinates(
@@ -249,6 +254,54 @@ async function submitLocation(e) {
     } catch (error) {
         console.error("Error adding location:", error);
         alert("Error adding location.")
+    }
+}*/
+
+// saves the pictures to the image folder of the project
+async function submitLocation(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title-add').value.trim());
+    formData.append('description', document.getElementById('description-add').value.trim());
+    formData.append('address', document.getElementById('address-add').value.trim());
+    formData.append('zipCode', document.getElementById('zip-add').value.trim());
+    formData.append('city', document.getElementById('city-add').value.trim());
+    formData.append('category', document.getElementById('categories-add').value);
+
+    // Append the image file
+    const imageInput = document.getElementById('image-upload-add');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
+
+    // Get coordinates
+    const coords = await getCoordinates(
+        formData.get('address'),
+        formData.get('zipCode'),
+        formData.get('city')
+    );
+    if (!coords) {
+        alert("Could not find coordinates for this address. Please check the address.");
+        return;
+    }
+    formData.append('lat', coords.lat);
+    formData.append('lon', coords.lon);
+
+    try {
+        const response = await fetch("/loc", {
+            method: "POST",
+            body: formData // Do NOT set Content-Type header!
+        });
+
+        if (!response.ok) throw new Error("Failed to add location");
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location added successfully!");
+        clearAddForm();
+    } catch (error) {
+        console.error("Error adding location:", error);
+        alert("Error adding location.");
     }
 }
 
@@ -346,7 +399,7 @@ async function showUpdateScreen(locationIndex) {
         changeHTMLForNonAdmin();
     }
 }
-
+/*
 async function updateLocation(e) {
     console.log("updateLocation function called")
     e.preventDefault();
@@ -399,6 +452,71 @@ async function updateLocation(e) {
         console.error("Error updating location:", error);
         alert("Error updating location. Please try again.");
     }
+}*/
+async function updateLocation(e) {
+    console.log("updateLocation function called")
+    e.preventDefault();
+    if (currentLocationIndex === -1 || !locations[currentLocationIndex]) {
+        alert("No location selected");
+        return;
+    }
+
+    const location = locations[currentLocationIndex];
+
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title-update').value.trim());
+    formData.append('description', document.getElementById('description-update').value.trim());
+    formData.append('address', document.getElementById('address-update').value.trim());
+    formData.append('zipCode', document.getElementById('zip-update').value.trim());
+    formData.append('city', document.getElementById('city-update').value.trim());
+    formData.append('category', document.getElementById("categories-update").value);
+
+    // Handle image update
+    const imageInput = document.getElementById("image-upload-update");
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    } else if (location.image) {
+        // If no new image, send the current image path so backend can keep it
+        formData.append('existingImage', location.image);
+    }
+
+    // Handle coordinates if address changed
+    const addressChanged = 
+        formData.get('address') != location.address ||
+        formData.get('zipCode') != location.zipCode ||
+        formData.get('city') != location.city;
+
+    if (addressChanged) {
+        const coords = await getCoordinates(
+            formData.get('address'),
+            formData.get('zipCode'),
+            formData.get('city')
+        );
+        if (!coords) {
+            alert("Could not find coordinates for this address.");
+            return;
+        }
+        formData.append('lat', coords.lat);
+        formData.append('lon', coords.lon);
+    } else {
+        formData.append('lat', location.lat);
+        formData.append('lon', location.lon);
+    }
+
+    try {
+        const response = await fetch(`/loc/${location._id}`, {
+            method: "PUT",
+            body: formData // No Content-Type header!
+        });
+
+        if (!response.ok) throw new Error("Failed to update location");
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location updated successfully!");
+    } catch (error) {
+        console.error("Error updating location:", error);
+        alert("Error updating location. Please try again.");
+    }
 }
 
 async function deleteLocation() {
@@ -420,15 +538,6 @@ async function deleteLocation() {
         console.error("Error deleting location:", error);
         alert("Error deleting location. Please try again.");
     }
-    /*
-    if (confirm("Are you sure you want to delete this location?")) {
-        locations.splice(currentLocationIndex, 1);
-        renderLocationsList();
-        showScreen("main");
-        alert("Location deleted successfully!");
-        currentLocationIndex = -1; // Reset the index
-    }
-*/
 }
 
 /******************************************************************************

@@ -13,7 +13,7 @@ const app = express();
 // Multer Configuration für File Upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/ressources/images/') // Ordner wo Bilder gespeichert werden
+    cb(null, path.join(__dirname, 'ressources/images')); // Ordner wo Bilder gespeichert werden
   },
   filename: function (req, file, cb) {
     // Eindeutiger Dateiname: timestamp + original extension
@@ -145,6 +145,7 @@ app.put("/loc/:id", async (req, res) => {
     }
 });
 */
+/*
 app.put("/loc/:id", upload.single('image'), async (req, res) => {
     try {
         console.log("PUT /loc/:id called with id:", req.params.id);
@@ -157,6 +158,38 @@ app.put("/loc/:id", upload.single('image'), async (req, res) => {
         }
         
         const result = await updateLocation(req.params.id, updateData);
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ message: "Location not found" });
+        }
+        res.status(204).send();
+        console.log("Location updated successfully");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+*/
+app.put("/loc/:id", upload.single('image'), async (req, res) => {
+    try {
+        const id = req.params.id;
+        const locationData = {
+            title: req.body.title,
+            description: req.body.description,
+            address: req.body.address,
+            zipCode: req.body.zipCode,
+            city: req.body.city,
+            category: req.body.category,
+            lat: parseFloat(req.body.lat),
+            lon: parseFloat(req.body.lon)
+        };
+
+        // If a new image is uploaded, use it; otherwise, keep the existing image
+        if (req.file) {
+            locationData.image = `/ressources/images/${req.file.filename}`;
+        } else if (req.body.existingImage) {
+            locationData.image = req.body.existingImage;
+        }
+
+        const result = await updateLocation(id, locationData);
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
