@@ -40,8 +40,6 @@ let users = [
 */
 
 let loggedInUser = null;
-let currentLocationIndex = -1;
-let locationId = 4;
 
 let locations = [];
 
@@ -414,6 +412,7 @@ function showUpdateScreen(locationIndex) {
 }
 
 async function updateLocation(e) {
+    console.log("updateLocation function called")
     e.preventDefault();
     if (currentLocationIndex === -1 || !locations[currentLocationIndex]) {
         alert("No location selected");
@@ -421,10 +420,6 @@ async function updateLocation(e) {
     }
 
     const location = locations[currentLocationIndex];
-
-    console.log("Update Location has been called")
-
-
     // fill form with existing data
     const formData = {
         title: document.getElementById('title-update').value.trim(),
@@ -432,7 +427,8 @@ async function updateLocation(e) {
         address: document.getElementById('address-update').value.trim(),
         zipCode: document.getElementById('zip-update').value.trim(),
         city: document.getElementById('city-update').value.trim(),
-        category: document.getElementById("categories-update").value
+        category: document.getElementById("categories-update").value,
+        image: document.getElementById("image-upload-update").value
     };
 
     // save address change
@@ -440,29 +436,22 @@ async function updateLocation(e) {
         formData.zipCode != location.zipCode ||
         formData.city != location.city;
 
-    // request new coords if address changed
-    try {
-        let coordinates = { lat: location.lat, lon: location.lon };
-
-        if (addressChanged) {
-            coordinates = await getCoordinates(formData.address, formData.zipCode, formData.city);
-            if (!coordinates) {
-                alert("Could not find coordinates for this address.");
-                return;
-            }
+     if (addressChanged) {
+        const coords = await getCoordinates(formData.address, formData.zipCode, formData.city);
+        if (!coords) {
+            alert("Could not find coordinates for this address.");
+            return;
         }
-        // Update the location object
-        locations[currentLocationIndex] = {
-            ...location,
-           ...formData,
-            lat: coordinates.lat,
-            lon: coordinates.lon
-        };
+        formData.lat = coords.lat;
+        formData.lon = coords.lon;
+    }
 
+    try {
+        console.log("Updating location with id:", location._id, "and data:", formData);
         const response = await fetch(`/loc/${location._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedLocation)
+            body: JSON.stringify(formData)
         });
 
         if (!response.ok) throw new Error("Failed to update location");
@@ -475,9 +464,25 @@ async function updateLocation(e) {
     }
 }
 
-function deleteLocation() {
+async function deleteLocation() {
     if(!confirm("Are you sure you want to delete this location?")) return;
-    if (currentLocationIndex === -1 || !locations[currentLocationIndex]) return;
+
+    const location = locations[currentLocationIndex];
+
+    try {
+        const response = await fetch(`/loc/${location._id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) throw new Error("Failed to delete location");
+
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location deleted successfully!");
+    } catch (error) {
+        console.error("Error deleting location:", error);
+        alert("Error deleting location. Please try again.");
+    }
     /*
     if (confirm("Are you sure you want to delete this location?")) {
         locations.splice(currentLocationIndex, 1);

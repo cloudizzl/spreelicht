@@ -36,7 +36,7 @@ app.post('/login', async (req, res) => {
 // adds a new location
 app.post("/loc", async (req, res) => {
     try {
-        const location = await addLocation();
+        const location = await addLocation(req.body);
         res.status(201)
             .set('Location', `/loc/${location._id}`)
             .json(location);
@@ -76,10 +76,14 @@ app.get("/loc/:id", async (req, res) => {
 });
 
 // updates a location by id
+/*
 app.put("/loc/:id", async (req, res) => {
     try {
-        const updatedLocation = await Location.findByIdAndUpdate(req.params.id, req.body, { new: false });
-        if (!updatedLocation) {
+        console.log("PUT /loc/:id called with id:", req.params.id);
+        console.log("Request body:", req.body);
+        const id = req.params.id;
+        const result = await updateLocation(id, req.body);
+        if (result.matchedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
         res.status(204).send();
@@ -92,8 +96,9 @@ app.put("/loc/:id", async (req, res) => {
 // deletes a location by id
 app.delete("/loc/:id", async (req, res) => {
     try {
-        const deletedLocation = await Location.findByIdAndDelete(req.params.id);
-        if (!deletedLocation) {
+        const id = req.params.id
+        const result = await deleteLocation(id);
+        if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
         res.status(204).send();
@@ -102,6 +107,35 @@ app.delete("/loc/:id", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+*/
+app.put("/loc/:id", async (req, res) => {
+    try {
+        console.log("PUT /loc/:id called with id:", req.params.id);
+        console.log("Request body:", req.body);
+        const id = req.params.id;
+        const result = await updateLocation(id, req.body);
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ message: "Location not found" });
+        }
+        res.status(200).json({ message: "Location updated successfully" });
+        console.log("Location updated successfully");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
+app.delete("/loc/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await deleteLocation(id);
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: "Location not found" });
+        }
+        res.status(200).json({ message: "Location deleted successfully" });
+        console.log("Location deleted successfully");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 let server = app.listen(3000, () => {
     console.log("Running at port " + 3000) });

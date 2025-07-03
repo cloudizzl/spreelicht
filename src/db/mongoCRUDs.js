@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 // Replace db_user, db_pass, db_name, db_collection
 const db_user = 'webappdev_locations_wad_locations_user';
@@ -56,7 +56,7 @@ export const findOneLocation = async function(locationId) {
   try {
     const database = client.db(db_name);
     const locations = database.collection('locations');
-    const query = {_id: locationId};
+    const query = { _id: typeof locationId === "string" ? new ObjectId(locationId) : locationId };
     const doc = await locations.findOne(query);
     return doc;
   } finally {
@@ -97,7 +97,8 @@ export const addLocation = async function(locationData) {
     const result = await locations.insertOne(locationData);
     // Print the ID of the inserted document
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
-    return result;
+    const insertedDoc = await findOneLocation(result.insertedId);
+    return insertedDoc;
   } finally {
     // Ensures that the client will close when finished and on error
     await client.close();
@@ -105,18 +106,18 @@ export const addLocation = async function(locationData) {
 };
 
 
-
+/*
 export const updateLocation = async function(locationId, locationData) {
   const client = new MongoClient(uri);
   try {
     const database = client.db(db_name);
     const locations = database.collection('locations');
-    const query = {_id: locationId};
-    const updateDoc = {
-      $set: locationData
-    };
+    const query = { _id: new ObjectId(locationId) };
+    const updateDoc = { $set: locationData };
+    console.log("Updating location with query:", query);
+    console.log("Update document:", updateDoc);
     const result = await locations.updateOne(query, updateDoc);
-    if (result.modifiedCount === 0) {
+    if (result.matchedCount === 0) {
       console.log("No documents matched the query. Updated 0 documents.");
     }
     return result;
@@ -132,16 +133,61 @@ export const deleteLocation = async function(locationId) {
   try {
     const database = client.db(db_name);
     const locations = database.collection('locations');
-    const query = {_id: locationId};
+    let query;
+    try {
+      query = { _id: new ObjectId(locationId) };
+    } catch (e) {
+      query = { _id: locationId }; // fallback if not a valid ObjectId
+    }
     const result = await locations.deleteOne(query);
-    if (result.deletedCount === 0) {
-      console.log("No documents matched the query. Deleted 0 documents.");
-    } else {
-      console.log(`Deleted document with _id: ${locationId}`);
+    console.log("Delete result:", result);
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+*/
+export const updateLocation = async function(locationId, locationData) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    let query;
+    try {
+      query = { _id: new ObjectId(locationId) };
+    } catch (e) {
+      query = { _id: locationId }; // fallback if not a valid ObjectId
+    }
+    const updateDoc = { $set: locationData };
+    console.log("Updating location with query:", query);
+    console.log("Update document:", updateDoc);
+    const result = await locations.updateOne(query, updateDoc);
+    console.log("Update result:", result);
+    if (result.matchedCount === 0) {
+      console.log("No documents matched the query. Updated 0 documents.");
     }
     return result;
   } finally {
-    // Ensures that the client will close when finished and on error
+    await client.close();
+  }
+};
+
+export const deleteLocation = async function(locationId) {
+  const client = new MongoClient(uri);
+  try {
+    const database = client.db(db_name);
+    const locations = database.collection('locations');
+    let query;
+    try {
+      query = { _id: new ObjectId(locationId) };
+    } catch (e) {
+      query = { _id: locationId }; // fallback if not a valid ObjectId
+    }
+    console.log("Deleting location with query:", query);
+    const result = await locations.deleteOne(query);
+    console.log("Delete result:", result);
+    return result;
+  } finally {
     await client.close();
   }
 };
