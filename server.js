@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+    console.log("Login req.body:", req.body);
     const { username, password } = req.body;
     try {
         const user = await findOneUser(username, password);
