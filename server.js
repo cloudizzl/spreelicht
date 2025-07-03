@@ -25,7 +25,7 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
-        res.status(200).json({ message: "Login successful", user });
+        res.status(200).json(user);
         console.log("User logged in successfully: " + user.username);
     } catch (error) {
         res.status(500).json({ message: error.message });

@@ -7,9 +7,6 @@ const ADD_FORM = document.getElementById("add-form")
 const UPDATE_FORM = document.getElementById("update-form");
 const LOCATIONS_LIST = document.querySelector(".locations-list");
 
-const { findOneUser } = require("../../src/db/mongoCRUDs.js")
-//require("../src/db/mongoCRUDs.js");
-const { addLocation, updateLocation, deleteLocation, findAllLocations } = require("../src/db/mongoCRUDs.js");
 
 /*
 LOGIN_SCREEN.style.display = "block";
@@ -504,7 +501,7 @@ async function renderLocationsList() {
     LOCATIONS_LIST.innerHTML = "";
 
     try {
-        const response = findAllLocations();
+        const response = await fetch("/loc");
         if (!response.ok) throw new Error("Failed to fetch locations");
         locations = await response.json();
     } catch (error) {
