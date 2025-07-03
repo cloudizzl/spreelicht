@@ -8,6 +8,7 @@ const { findOneUser, findAllLocations, addLocation, findOneLocation } = require(
 // Middleware
 app.use(express.json()); // json parsing
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/ressources', express.static(path.join(__dirname, 'ressources')));
 
 // Endpoints
 
@@ -112,8 +113,8 @@ app.put("/loc/:id", async (req, res) => {
     try {
         console.log("PUT /loc/:id called with id:", req.params.id);
         console.log("Request body:", req.body);
-        const id = req.params.id;
-        const result = await updateLocation(id, req.body);
+        
+        const result = await updateLocation(req_id, req.body);
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
@@ -127,7 +128,7 @@ app.put("/loc/:id", async (req, res) => {
 app.delete("/loc/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await deleteLocation(id);
+        const result = await deleteLocation(req._id);
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }

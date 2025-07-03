@@ -92,7 +92,7 @@ let locations = [
 function initApp() {
     showScreen("login");
     setupEventListeners();
-    renderLocationsList();
+    //renderLocationsList();
 }
 
 function showScreen(screenName) {
@@ -304,7 +304,7 @@ async function submitLocation(e) {
         
         const newLocation = {
             ...formData,
-            image: null,
+            image: imageBase64,
             lat: coords.lat,
             lon: coords.lon
         }
@@ -326,6 +326,7 @@ async function submitLocation(e) {
         alert("Error adding location.")
     }
 }
+
 
 async function getCoordinates(address, zipCode, city) {
     /* url = "https://nominatim.openstreetmap.org/search?street="+address
@@ -431,6 +432,7 @@ async function updateLocation(e) {
         image: document.getElementById("image-upload-update").value
     };
 
+    
     // save address change
     const addressChanged = formData.address != location.address ||
         formData.zipCode != location.zipCode ||
