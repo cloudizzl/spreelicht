@@ -1,9 +1,20 @@
-const express = require("express");
-const path = require("path")
-const app = express();
-const Location = require('./src/location.model.js')
+import express from "express"; // TODO Änderung 
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { findOneUser, findAllLocations, addLocation, findOneLocation, updateLocation, deleteLocation } from './src/db/mongoCRUDs.js';
 
-const { findOneUser, findAllLocations, addLocation, findOneLocation } = require('./src/db/mongoCRUDs.js'); // Make sure this is required
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
+
+// const express = require("express");
+// const path = require("path")
+// const app = express();
+// const Location = require('./src/location.model.js')
+
+// const { findOneUser, findAllLocations, addLocation, findOneLocation } = require('./src/db/mongoCRUDs.js'); // Make sure this is required
 
 // Middleware
 app.use(express.json()); // json parsing
@@ -64,7 +75,8 @@ app.get("/loc", async (req, res) => {
 // get single location by id
 app.get("/loc/:id", async (req, res) => {
     try {
-        const location = await findOneLocation(_id);
+        // const location = await findOneLocation(_id);
+        const location = await findOneLocation(req.params.id); // TODO: Claudia hat geändert
         if (!location) {
             return res.status(404).json({ message: "Location not found" });
         }
@@ -114,7 +126,8 @@ app.put("/loc/:id", async (req, res) => {
         console.log("PUT /loc/:id called with id:", req.params.id);
         console.log("Request body:", req.body);
         
-        const result = await updateLocation(req_id, req.body);
+        // const result = await updateLocation(req_id, req.body);
+        const result = await updateLocation(req.params.id, req.body); // TODO: Claudia hat geändert
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
@@ -128,7 +141,8 @@ app.put("/loc/:id", async (req, res) => {
 app.delete("/loc/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await deleteLocation(req._id);
+        // const result = await deleteLocation(req._id);
+        const result = await deleteLocation(req.params.id); // TODO: Claudia hat geändert
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Location not found" });
         }
