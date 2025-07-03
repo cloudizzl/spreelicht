@@ -293,10 +293,19 @@ async function submitLocation(e) {
         city: document.getElementById('city-add').value.trim(),
         category: document.getElementById('categories-add').value
     };
-
+    /*
+    // Append the image file
+    const imageInput = document.getElementById('image-upload-add');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
+*/
     try {
-        const coords = await getCoordinates(formData.address.toString(), formData.zipCode.toString(),
-            formData.city.toString());
+        const coords = await getCoordinates(
+            formData.address.toString(), 
+            formData.zipCode.toString(),
+            formData.city.toString()
+        );
         if (!coords) {
             alert("Could not find coordinates for this address. Please check the address.");
             return;
@@ -304,7 +313,6 @@ async function submitLocation(e) {
         
         const newLocation = {
             ...formData,
-            image: imageBase64,
             lat: coords.lat,
             lon: coords.lon
         }
