@@ -19,70 +19,11 @@ UPDATE_SCREEN.style.display = "none";
  *                             DATABASE                                *
  ******************************************************************************/
 
-/*
-const ADMIN = {
-    username: "admina",
-    password: "password",
-    role: "admin",
-    name: "Mina"
-};
-const NORMAL = {
-    username: "normalo",
-    password: "password",
-    role: "non-admin",
-    name: "Norman"
-};
-
-let users = [
-    ADMIN,
-    NORMAL
-];
-*/
 
 let loggedInUser = null;
 
 let locations = [];
 
-/*
-let locations = [
-    {
-        id: 1,
-        title: "S-Bahn Verspätung",
-        description: "Häufige Verspätungen der S-Bahn",
-        address: "Koppenstraße 3",
-        zipCode: "10243",
-        city: "Berlin",
-        category: "ÖPNV",
-        image: "../ressources/images/Verspätung.jpeg",
-        lat: 52.50975365892219,
-        lon: 13.435748486045767
-    },
-    {
-        id: 2,
-        title: "S-Bahnverkehr in S Schöneweide unterbrochen",
-        description: "Komplette Unterbrechung des S-Bahnverkehrs",
-        address: "Michael-Brückner-Straße 42",
-        zipCode: "12439",
-        city: "Berlin",
-        category: "ÖPNV",
-        image: null,
-        lat: 52.45493933211213,
-        lon: 13.50934934001513
-    },
-    {
-        id: 3,
-        title: "Leihfahrzeuge blockieren Straßen",
-        description: "E-Scooter und Leihfahrräder blockieren Gehwege",
-        address: "Manteuffelstraße 77",
-        zipCode: "10999",
-        city: "Berlin",
-        category: "Transportmittel-Sharing",
-        image: "../ressources/images/Manteuffelstraße.JPG",
-        lat: 52.49780397315911,
-        lon: 13.42520448234554
-    }
-];
-*/
 
 
 /******************************************************************************
@@ -248,24 +189,6 @@ async function login(e) {
         alert("An error occurred while logging in. Please try again later.");
         console.error("Login error:", error);
     }
-/*
-
-    if (!user) {
-        alert("User not found. Please check your username and password.");
-        return;
-    }
-
-    if (user) {
-        loggedInUser = user;
-        updateWelcomeMessage();
-        disableButtons();
-        renderLocationsList();
-        showScreen("main");
-        // LOGIN_FORM.reset();
-    } else {
-        alert("Invalid username or password!")
-    }
-*/
 }
 
 function logout() {
@@ -293,13 +216,7 @@ async function submitLocation(e) {
         city: document.getElementById('city-add').value.trim(),
         category: document.getElementById('categories-add').value
     };
-    /*
-    // Append the image file
-    const imageInput = document.getElementById('image-upload-add');
-    if (imageInput && imageInput.files[0]) {
-        formData.append('image', imageInput.files[0]);
-    }
-*/
+
     try {
         const coords = await getCoordinates(
             formData.address.toString(), 
@@ -337,8 +254,6 @@ async function submitLocation(e) {
 
 
 async function getCoordinates(address, zipCode, city) {
-    /* url = "https://nominatim.openstreetmap.org/search?street="+address
-        +"&city="+city+"&country=Germany&postalcode="+zipCode+"&format=json" */
     let uri = "https://nominatim.openstreetmap.org/search?street=" + address + "&city=" + city + "&country=Germany&postalcode=" + zipCode + "&format=json&limit=1";
     let encoded = encodeURI(uri);
 
@@ -381,10 +296,23 @@ function clearAddForm() {
 /******************************************************************************
  *                             Update SCREEN                                  *
  ******************************************************************************/
-function showUpdateScreen(locationIndex) {
+async function showUpdateScreen(locationIndex) {
     currentLocationIndex = locationIndex;
-    const location = locations[locationIndex];
-
+    const locationId = locations[locationIndex]?._id;
+    if(!locationId){
+        alert("Location not found.")
+        return;
+    }
+    let location;
+    try{
+        const response = await fetch(`/loc/${locationId}`);
+        if (!response.ok) throw new Error("Failed to fetch location data");
+        location = await response.json();
+    } catch (error) {
+        alert("Could not load location details.");
+        console.error(error);
+        return;
+    }
     if (location) {
         const titleField = document.getElementById("title-update");
         const descField = document.getElementById("description-update");
@@ -416,7 +344,6 @@ function showUpdateScreen(locationIndex) {
 
         showScreen("update");
         changeHTMLForNonAdmin();
-
     }
 }
 
