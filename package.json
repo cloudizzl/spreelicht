@@ -1,18 +1,22 @@
 {
   "name": "demo",
   "version": "0.0.0",
+  "type": "module",
   "private": "true",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "mocha --exit tests/*",
     "start": "node server.js"
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^10.2.0",
-    "supertest": "^6.3.4"
+    "mocha": "^11.7.1",
+    "supertest": "^7.1.1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.1",
+    "multer": "^2.0.1"
   }
 }

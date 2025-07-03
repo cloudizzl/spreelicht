@@ -7,6 +7,7 @@ const ADD_FORM = document.getElementById("add-form")
 const UPDATE_FORM = document.getElementById("update-form");
 const LOCATIONS_LIST = document.querySelector(".locations-list");
 
+
 /*
 LOGIN_SCREEN.style.display = "block";
 MAIN_SCREEN.style.display = "none";
@@ -18,66 +19,11 @@ UPDATE_SCREEN.style.display = "none";
  *                             DATABASE                                *
  ******************************************************************************/
 
-const ADMIN = {
-    username: "admina",
-    password: "password",
-    role: "admin",
-    name: "Mina"
-};
-const NORMAL = {
-    username: "normalo",
-    password: "password",
-    role: "non-admin",
-    name: "Norman"
-};
-
-let users = [
-    ADMIN,
-    NORMAL
-];
 
 let loggedInUser = null;
-let currentLocationIndex = -1;
-let locationId = 4;
 
-let locations = [
-    {
-        id: 1,
-        title: "S-Bahn Verspätung",
-        description: "Häufige Verspätungen der S-Bahn",
-        address: "Koppenstraße 3",
-        zipCode: "10243",
-        city: "Berlin",
-        category: "ÖPNV",
-        image: "../ressources/images/Verspätung.jpeg",
-        lat: 52.50975365892219,
-        lon: 13.435748486045767
-    },
-    {
-        id: 2,
-        title: "S-Bahnverkehr in S Schöneweide unterbrochen",
-        description: "Komplette Unterbrechung des S-Bahnverkehrs",
-        address: "Michael-Brückner-Straße 42",
-        zipCode: "12439",
-        city: "Berlin",
-        category: "ÖPNV",
-        image: null,
-        lat: 52.45493933211213,
-        lon: 13.50934934001513
-    },
-    {
-        id: 3,
-        title: "Leihfahrzeuge blockieren Straßen",
-        description: "E-Scooter und Leihfahrräder blockieren Gehwege",
-        address: "Manteuffelstraße 77",
-        zipCode: "10999",
-        city: "Berlin",
-        category: "Transportmittel-Sharing",
-        image: "../ressources/images/Manteuffelstraße.JPG",
-        lat: 52.49780397315911,
-        lon: 13.42520448234554
-    }
-];
+let locations = [];
+
 
 
 /******************************************************************************
@@ -87,7 +33,7 @@ let locations = [
 function initApp() {
     showScreen("login");
     setupEventListeners();
-    renderLocationsList();
+    //renderLocationsList();
 }
 
 function showScreen(screenName) {
@@ -215,24 +161,33 @@ function changeHTMLForNonAdmin() {
  *                             LOGIN    /   LOGOUT                            *
  ******************************************************************************/
 
-function login(e) {
+async function login(e) {
     e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    const user = users.find(u =>
-        u.username === username && u.password === password);
+    try {
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+        if (!response.ok) {
+            alert("Login failed. Please check your username and password.");
+            return;
+        }
 
-    if (user) {
+        const user = await response.json();
         loggedInUser = user;
         updateWelcomeMessage();
         disableButtons();
         renderLocationsList();
         showScreen("main");
-        // LOGIN_FORM.reset();
-    } else {
-        alert("Invalid username or password!")
+        LOGIN_FORM.reset();
+    } catch (error) {
+        alert("An error occurred while logging in. Please try again later.");
+        console.error("Login error:", error);
     }
 }
 
@@ -250,7 +205,8 @@ function logout() {
  *                             ADD SCREEN                                    *
  ******************************************************************************/
 
-
+// TODO - add image upload functionality
+/*
 async function submitLocation(e) {
     e.preventDefault();
     const formData = {
@@ -261,43 +217,96 @@ async function submitLocation(e) {
         city: document.getElementById('city-add').value.trim(),
         category: document.getElementById('categories-add').value
     };
+    const imageInput = document.getElementById('image-upload-add');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
 
     try {
-        const coords = await getCoordinates(formData.address.toString(), formData.zipCode.toString(),
-            formData.city.toString());
-
-        if (coords) {
-            const newLocation = {
-                id: locationId++,
-                title: formData.title,
-                description: formData.description,
-                address: formData.address,
-                zipCode: formData.zipCode,
-                city: formData.city,
-                category: formData.category,
-                image: null,
-                lat: coords.lat,
-                lon: coords.lon
-            }
-
-            // add the new location to the locations array
-            locations.push(newLocation)
-            renderLocationsList();
-            showScreen("main");
-            clearAddForm();
-            alert("Location added successfully!");
-        } else {
+        const coords = await getCoordinates(
+            formData.address.toString(), 
+            formData.zipCode.toString(),
+            formData.city.toString()
+        );
+        if (!coords) {
             alert("Could not find coordinates for this address. Please check the address.");
+            return;
         }
+        
+        const newLocation = {
+            ...formData,
+            lat: coords.lat,
+            lon: coords.lon
+        }
+
+        // add the new location to the locations array
+        const response = await fetch("/loc", {
+            method: "POST",
+            headers: {"Content-Type": "application/json" },
+            body: JSON.stringify(newLocation)
+        });
+
+        if (!response.ok) throw new Error("Failed to add location");
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location added successfully!");
+        clearAddForm();
     } catch (error) {
         console.error("Error adding location:", error);
         alert("Error adding location.")
     }
+}*/
+
+// saves the pictures to the image folder of the project
+async function submitLocation(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title-add').value.trim());
+    formData.append('description', document.getElementById('description-add').value.trim());
+    formData.append('address', document.getElementById('address-add').value.trim());
+    formData.append('zipCode', document.getElementById('zip-add').value.trim());
+    formData.append('city', document.getElementById('city-add').value.trim());
+    formData.append('category', document.getElementById('categories-add').value);
+
+    // Append the image file
+    const imageInput = document.getElementById('image-upload-add');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
+
+    // Get coordinates
+    const coords = await getCoordinates(
+        formData.get('address'),
+        formData.get('zipCode'),
+        formData.get('city')
+    );
+    if (!coords) {
+        alert("Could not find coordinates for this address. Please check the address.");
+        return;
+    }
+    formData.append('lat', coords.lat);
+    formData.append('lon', coords.lon);
+
+    try {
+        const response = await fetch("/loc", {
+            method: "POST",
+            body: formData // Do NOT set Content-Type header!
+        });
+
+        if (!response.ok) throw new Error("Failed to add location");
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location added successfully!");
+        clearAddForm();
+    } catch (error) {
+        console.error("Error adding location:", error);
+        alert("Error adding location.");
+    }
 }
 
+
 async function getCoordinates(address, zipCode, city) {
-    /* url = "https://nominatim.openstreetmap.org/search?street="+address
-        +"&city="+city+"&country=Germany&postalcode="+zipCode+"&format=json" */
     let uri = "https://nominatim.openstreetmap.org/search?street=" + address + "&city=" + city + "&country=Germany&postalcode=" + zipCode + "&format=json&limit=1";
     let encoded = encodeURI(uri);
 
@@ -340,10 +349,23 @@ function clearAddForm() {
 /******************************************************************************
  *                             Update SCREEN                                  *
  ******************************************************************************/
-function showUpdateScreen(locationIndex) {
+async function showUpdateScreen(locationIndex) {
     currentLocationIndex = locationIndex;
-    const location = locations[locationIndex];
-
+    const locationId = locations[locationIndex]?._id;
+    if(!locationId){
+        alert("Location not found.")
+        return;
+    }
+    let location;
+    try{
+        const response = await fetch(`/loc/${locationId}`);
+        if (!response.ok) throw new Error("Failed to fetch location data");
+        location = await response.json();
+    } catch (error) {
+        alert("Could not load location details.");
+        console.error(error);
+        return;
+    }
     if (location) {
         const titleField = document.getElementById("title-update");
         const descField = document.getElementById("description-update");
@@ -375,11 +397,64 @@ function showUpdateScreen(locationIndex) {
 
         showScreen("update");
         changeHTMLForNonAdmin();
-
     }
 }
-
+/*
 async function updateLocation(e) {
+    console.log("updateLocation function called")
+    e.preventDefault();
+    if (currentLocationIndex === -1 || !locations[currentLocationIndex]) {
+        alert("No location selected");
+        return;
+    }
+
+    const location = locations[currentLocationIndex];
+    // fill form with existing data
+    const formData = {
+        title: document.getElementById('title-update').value.trim(),
+        description: document.getElementById('description-update').value.trim(),
+        address: document.getElementById('address-update').value.trim(),
+        zipCode: document.getElementById('zip-update').value.trim(),
+        city: document.getElementById('city-update').value.trim(),
+        category: document.getElementById("categories-update").value,
+        image: document.getElementById("image-upload-update").value
+    };
+
+    
+    // save address change
+    const addressChanged = formData.address != location.address ||
+        formData.zipCode != location.zipCode ||
+        formData.city != location.city;
+
+     if (addressChanged) {
+        const coords = await getCoordinates(formData.address, formData.zipCode, formData.city);
+        if (!coords) {
+            alert("Could not find coordinates for this address.");
+            return;
+        }
+        formData.lat = coords.lat;
+        formData.lon = coords.lon;
+    }
+
+    try {
+        console.log("Updating location with id:", location._id, "and data:", formData);
+        const response = await fetch(`/loc/${location._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) throw new Error("Failed to update location");
+        await renderLocationsList();
+        showScreen("main");
+        alert("Location updated successfully!");
+    } catch (error) {
+        console.error("Error updating location:", error);
+        alert("Error updating location. Please try again.");
+    }
+}*/
+async function updateLocation(e) {
+    console.log("updateLocation function called")
     e.preventDefault();
     if (currentLocationIndex === -1 || !locations[currentLocationIndex]) {
         alert("No location selected");
@@ -388,49 +463,54 @@ async function updateLocation(e) {
 
     const location = locations[currentLocationIndex];
 
-    console.log("Update Location has been called")
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title-update').value.trim());
+    formData.append('description', document.getElementById('description-update').value.trim());
+    formData.append('address', document.getElementById('address-update').value.trim());
+    formData.append('zipCode', document.getElementById('zip-update').value.trim());
+    formData.append('city', document.getElementById('city-update').value.trim());
+    formData.append('category', document.getElementById("categories-update").value);
 
+    // Handle image update
+    const imageInput = document.getElementById("image-upload-update");
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    } else if (location.image) {
+        // If no new image, send the current image path so backend can keep it
+        formData.append('existingImage', location.image);
+    }
 
-    // fill form with existing data
-    const formData = {
-        title: document.getElementById('title-update').value.trim(),
-        description: document.getElementById('description-update').value.trim(),
-        address: document.getElementById('address-update').value.trim(),
-        zipCode: document.getElementById('zip-update').value.trim(),
-        city: document.getElementById('city-update').value.trim(),
-        category: document.getElementById("categories-update").value
-    };
+    // Handle coordinates if address changed
+    const addressChanged = 
+        formData.get('address') != location.address ||
+        formData.get('zipCode') != location.zipCode ||
+        formData.get('city') != location.city;
 
-    // save address change
-    const addressChanged = formData.address != location.address ||
-        formData.zipCode != location.zipCode ||
-        formData.city != location.city;
-
-    // request new coords if address changed
-    try {
-        let coordinates = { lat: location.lat, lon: location.lon };
-
-        if (addressChanged) {
-            coordinates = await getCoordinates(formData.address, formData.zipCode, formData.city);
-            if (!coordinates) {
-                alert("Could not find coordinates for this address.");
-                return;
-            }
+    if (addressChanged) {
+        const coords = await getCoordinates(
+            formData.get('address'),
+            formData.get('zipCode'),
+            formData.get('city')
+        );
+        if (!coords) {
+            alert("Could not find coordinates for this address.");
+            return;
         }
-        // Update the location object
-        locations[currentLocationIndex] = {
-            ...location,
-            title: formData.title,
-            description: formData.description,
-            address: formData.address,
-            zipCode: formData.zipCode,
-            city: formData.city,
-            category: formData.category,
-            lat: coordinates.lat,
-            lon: coordinates.lon
-        };
+        formData.append('lat', coords.lat);
+        formData.append('lon', coords.lon);
+    } else {
+        formData.append('lat', location.lat);
+        formData.append('lon', location.lon);
+    }
 
-        renderLocationsList();
+    try {
+        const response = await fetch(`/loc/${location._id}`, {
+            method: "PUT",
+            body: formData // No Content-Type header!
+        });
+
+        if (!response.ok) throw new Error("Failed to update location");
+        await renderLocationsList();
         showScreen("main");
         alert("Location updated successfully!");
     } catch (error) {
@@ -439,13 +519,24 @@ async function updateLocation(e) {
     }
 }
 
-function deleteLocation() {
-    if (confirm("Are you sure you want to delete this location?")) {
-        locations.splice(currentLocationIndex, 1);
-        renderLocationsList();
+async function deleteLocation() {
+    if(!confirm("Are you sure you want to delete this location?")) return;
+
+    const location = locations[currentLocationIndex];
+
+    try {
+        const response = await fetch(`/loc/${location._id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) throw new Error("Failed to delete location");
+
+        await renderLocationsList();
         showScreen("main");
         alert("Location deleted successfully!");
-        currentLocationIndex = -1; // Reset the index
+    } catch (error) {
+        console.error("Error deleting location:", error);
+        alert("Error deleting location. Please try again.");
     }
 }
 
@@ -453,13 +544,26 @@ function deleteLocation() {
  *                      LOCATION FUNCTIONS                                    *
  ******************************************************************************/
 
-function renderLocationsList() {
+async function renderLocationsList() {
     if (!LOCATIONS_LIST) {
         return;
     }
 
     LOCATIONS_LIST.innerHTML = "";
 
+    try {
+        const response = await fetch("/loc");
+        if (!response.ok) throw new Error("Failed to fetch locations");
+        locations = await response.json();
+        if (!Array.isArray(locations) || locations.length === 0) {
+            LOCATIONS_LIST.innerHTML = "<p>No locations found.</p>";
+            return;
+        }
+    } catch (error) {
+        console.error("Error fetching locations:", error);
+        alert("Error fetching locations. Please try again later.");
+        return;
+    }
     locations.forEach((location, index) => {
         const locationCard = document.createElement("article");
         locationCard.className = "location-card";
