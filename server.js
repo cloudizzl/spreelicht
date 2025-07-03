@@ -3,7 +3,7 @@ const path = require("path")
 const app = express();
 const Location = require('./src/location.model.js')
 
-const { findOneUser } = require('./src/db/mongoCRUDs.js'); // Make sure this is required
+const { findOneUser, findAllLocations, addLocation, findOneLocation } = require('./src/db/mongoCRUDs.js'); // Make sure this is required
 
 // Middleware
 app.use(express.json()); // json parsing
@@ -36,7 +36,7 @@ app.post('/login', async (req, res) => {
 // adds a new location
 app.post("/loc", async (req, res) => {
     try {
-        const location = await Location.create(req.body);
+        const location = await addLocation();
         res.status(201)
             .set('Location', `/loc/${location._id}`)
             .json(location);
@@ -49,7 +49,8 @@ app.post("/loc", async (req, res) => {
 // gets all locations
 app.get("/loc", async (req, res) => {
     try {
-        const locations = await Location.find({});
+        const locations = await findAllLocations();
+        console.log("Fetched locations:", locations);
         res.status(200)
            .set('Content-Type', 'application/json')
            .json(locations);
@@ -62,7 +63,7 @@ app.get("/loc", async (req, res) => {
 // get single location by id
 app.get("/loc/:id", async (req, res) => {
     try {
-        const location = await Location.findById(req.params.id);
+        const location = await findOneLocation(_id);
         if (!location) {
             return res.status(404).json({ message: "Location not found" });
         }

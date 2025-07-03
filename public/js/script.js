@@ -504,6 +504,10 @@ async function renderLocationsList() {
         const response = await fetch("/loc");
         if (!response.ok) throw new Error("Failed to fetch locations");
         locations = await response.json();
+        if (!Array.isArray(locations) || locations.length === 0) {
+            LOCATIONS_LIST.innerHTML = "<p>No locations found.</p>";
+            return;
+        }
     } catch (error) {
         console.error("Error fetching locations:", error);
         alert("Error fetching locations. Please try again later.");
